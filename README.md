@@ -22,6 +22,7 @@ As part the `SOPRO` project, we are going to analyze through the WRF-CMAQ model 
 The tasks are describing as following:
 
 - [ ] Run the WRF model for Portugal
+   - [ ] Explore [NCEP GDAS/FNL 0.25 Degree Global Tropospheric Analyses and Forecast Grids](https://rda.ucar.edu/datasets/ds083.3/)   
    - [ ] Sep - Dec 2017. Resolution of 3 km.
    - [ ] Review the article *[Modelling air quality levels of regulated metals: limitations and challenges](https://link.springer.com/article/10.1007/s11356-020-09645-9)* to obtain coordinates for WRF.
    - [ ] Evaluate the meteorological simulations for Portugal against the observations for three or more meteorological stations.
