@@ -16,7 +16,7 @@ The `SOPRO` project aims to:
 * Link physico-chemical properties of emissions to health risks;
 * Propose source-oriented mitigation strategies.
 
-As part the `SOPRO` project, we are going to analyze through the WRF-CMAQ model the atmospheric chemical transport of particles and its secondary formation. Also, a source profiles will be analyzed (speciation), including cooking as source.
+As part the `SOPRO` project, we are going to analyze through the WRF-CMAQ model the atmospheric chemical transport of particles and its secondary formation. Also, a source profiles will be analyzed (speciation), including cooking as a source.
 
 ## Preliminar work to propose a PhD project to the IAG (USP)
 The tasks are describing as following:
