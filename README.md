@@ -24,8 +24,8 @@ The tasks are describing as following:
 - [ ] Run the WRF model for Portugal
    - [ ] Sep - Dec 2017. Resolution of 3 km.
    - [ ] Review the article *[Modelling air quality levels of regulated metals: limitations and challenges](https://link.springer.com/article/10.1007/s11356-020-09645-9)* to obtain coordinates for WRF.
-   - [ ] Evaluate the meteorological simulations against the observations in Portugal for three or more meteorological stations.
-- [ ] Review meteorological observations in Portugal inside the modeling domain area.
+   - [ ] Evaluate the meteorological simulations for Portugal against the observations for three or more meteorological stations.
+- [ ] Review meteorological observations inside the modeling domain area.
 - [ ] Write a Thesis Proposal for the PhD. This proposal will useful to be admitted to the IAG (USP) as part of the program of PhD studies.
   - [ ] Review articles about aerosol speciation, sources, CMAQ, urban issues about air quality risk over human health.
   - [ ] Write a justification and motivation.
