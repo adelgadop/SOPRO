@@ -39,4 +39,4 @@ The tasks are describing as following:
   - [ ] Modeling practice with CMAQ. Use a tutorial as an example to run CMAQ.
   - [ ] Run CMAQ for Portugal and for the modeling domain of interest for the SOPRO Project, using WRF simulations. Evaluate results about aerosol formation and source profiles.
 
-My email is <adelgado@iag.usp.br> in case you want share information and colaborate with me to run CMAQ and WRF. We can help each other and it will be essential to learn english if you are a native.
+My email is <adelgado@iag.usp.br> if you want to get in touch.
