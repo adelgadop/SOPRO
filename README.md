@@ -33,7 +33,7 @@ The tasks are describing as following:
   - [ ] Methodology
   - [ ] Schedule for the PhD research.
 - [ ] CMAQ
-  - [ ] Introduction of CMAQ. Review tutorial videos in YouTube of **[`NQualiAr](https://www.youtube.com/channel/UCIc6KMeWteIZ55VIMiQI-5w)**.
+  - [ ] Introduction of CMAQ. Review tutorial videos in YouTube of **[`NQualiAr`](https://www.youtube.com/channel/UCIc6KMeWteIZ55VIMiQI-5w)**.
   - [ ] Review guidelines about model install and running. After that, review articles about CMAQ for aerosols for urban areas.
   - [ ] Modeling practice with CMAQ. Use a tutorial as an example to run CMAQ.
   - [ ] Run CMAQ for Portugal and for the modeling domain of interest for the SOPRO Project, using WRF simulations. Evaluate results about aerosol formation and source profiles.
