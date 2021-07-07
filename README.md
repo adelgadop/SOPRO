@@ -23,7 +23,9 @@ The tasks are describing as following:
 
 - [ ] Run the WRF model for Portugal
    - [ ] Review the article *[Modelling air quality levels of regulated metals: limitations and challenges](https://link.springer.com/article/10.1007/s11356-020-09645-9)* to obtain coordinates for WRF and details to reproduce the experiment.
+   - [ ] Explore these websites: [Conor](https://conorsweeneyucd.blogspot.com/2015/01/download-era-interim-data.html), [dreambooker](https://dreambooker.site/2018/04/20/Initializing-the-WRF-model-with-ERA5/) about how download and automatize this process to initialization WRF-ARW.
    - [ ] Explore [ERA Interim](https://rda.ucar.edu/datasets/ds627.0/) as meteorological initial and boundary conditions at 6 h and 0.75º temporal and spatial resolution, respectively.
+   - [ ] Download ERA Interim and run the WRF-ARW.
    - [ ] Sep - Dec 2017. Resolution of 3 km, according to the agrreement in the meeting.
    - [ ] Evaluate the meteorological simulations for Portugal against the observations for three or more meteorological stations using Python.
 - [ ] Review meteorological observations inside the modeling domain area.
