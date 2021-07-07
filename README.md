@@ -22,10 +22,10 @@ As part the `SOPRO` project, we are going to analyze through the WRF-CMAQ model 
 The tasks are describing as following:
 
 - [ ] Run the WRF model for Portugal
-   - [ ] Explore [NCEP GDAS/FNL 0.25 Degree Global Tropospheric Analyses and Forecast Grids](https://rda.ucar.edu/datasets/ds083.3/)   
-   - [ ] Sep - Dec 2017. Resolution of 3 km.
-   - [ ] Review the article *[Modelling air quality levels of regulated metals: limitations and challenges](https://link.springer.com/article/10.1007/s11356-020-09645-9)* to obtain coordinates for WRF.
-   - [ ] Evaluate the meteorological simulations for Portugal against the observations for three or more meteorological stations.
+   - [ ] Review the article *[Modelling air quality levels of regulated metals: limitations and challenges](https://link.springer.com/article/10.1007/s11356-020-09645-9)* to obtain coordinates for WRF and details to reproduce the experiment.
+   - [ ] Explore [ERA Interim](https://rda.ucar.edu/datasets/ds627.0/) as meteorological initial and boundary conditions at 6 h and 0.75º temporal and spatial resolution, respectively.
+   - [ ] Sep - Dec 2017. Resolution of 3 km, according to the agrreement in the meeting.
+   - [ ] Evaluate the meteorological simulations for Portugal against the observations for three or more meteorological stations using Python.
 - [ ] Review meteorological observations inside the modeling domain area.
 - [ ] Write a Thesis Proposal for the PhD. This proposal will useful to be admitted to the IAG (USP) as part of the program of PhD studies.
   - [ ] Review articles about aerosol speciation, sources, CMAQ, urban issues about air quality risk over human health.
@@ -39,4 +39,4 @@ The tasks are describing as following:
   - [ ] Modeling practice with CMAQ. Use a tutorial as an example to run CMAQ.
   - [ ] Run CMAQ for Portugal and for the modeling domain of interest for the SOPRO Project, using WRF simulations. Evaluate results about aerosol formation and source profiles.
 
-My email is <adelgado@iag.usp.br> in case you want share information and colaborate with me to run CMAQ and WRF. We can help each other and it will be essential to learn english if you are a native.
+My email is <adelgado@iag.usp.br> if you want to get in touch.
