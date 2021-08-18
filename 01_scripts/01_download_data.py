@@ -65,6 +65,9 @@ for f,n in zip(files, stations):
 with open('../02_data/processed/met.pkl', 'wb') as handle:
     pkl.dump(met, handle, protocol=pkl.HIGHEST_PROTOCOL)
     
+# Export stations as csv
+stat_df.to_csv('stations.csv')
+    
 #%% Figures --------------------------------------------------------------------
 
 labels = ['%', 'ºC', 'm s$^{-1}$', 'degree']
