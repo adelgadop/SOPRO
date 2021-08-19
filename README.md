@@ -22,9 +22,9 @@ As part the `SOPRO` project, we are going to analyze through the WRF-CMAQ model 
 The tasks are describing as following:
 
 - [ ] Run the WRF model for Portugal
-   - [ ] Review the article *[Modelling air quality levels of regulated metals: limitations and challenges](https://link.springer.com/article/10.1007/s11356-020-09645-9)* to obtain coordinates for WRF and details to reproduce the experiment.
-   - [ ] Use of NCEP GDAS/FNL 0.25 Degree Global Tropospheric Analyses and Forecast Grids [ds083.3](https://rda.ucar.edu/datasets/ds083.3/)
-   - [ ] Geogrid model configuration
+   - [x] Review the article *[Modelling air quality levels of regulated metals: limitations and challenges](https://link.springer.com/article/10.1007/s11356-020-09645-9)* to obtain coordinates for WRF and details to reproduce the experiment.
+   - [x] Use of NCEP GDAS/FNL 0.25 Degree Global Tropospheric Analyses and Forecast Grids [ds083.3](https://rda.ucar.edu/datasets/ds083.3/)
+   - [x] Geogrid model configuration
 
 ![image](https://user-images.githubusercontent.com/52834007/128647685-ef32100e-9d63-4ad9-810a-7d136063e4c7.png)
 
