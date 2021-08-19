@@ -47,7 +47,7 @@ for f,n in zip(files, stations):
      met[n] = dates_df.merge(met[n], on = 'date', how = 'left')
      
      # We get another variables
-     met[n]['t2'] = (met[n]['tmpf'] -32)*5/9
+     met[n]['tc'] = (met[n]['tmpf'] -32)*5/9
      met[n]['ws'] = met[n]['sknt']*0.514444
      met[n]['wd'] = met[n]['drct']
      met[n].set_index('date', inplace = True)
@@ -76,7 +76,7 @@ fig1, ax = plt.subplots(6, figsize = (10,14),sharex = True,
                        gridspec_kw={'hspace': 0.25})
 for i, n in enumerate(stations):
     #for p in ['']
-    met[n].plot(y = 't2', style = 'k.',
+    met[n].plot(y = 'tc', style = 'k.',
                 alpha = .4,
                 ylabel = 'ºC',
                 ax = ax[i], 
