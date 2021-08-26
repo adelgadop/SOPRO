@@ -112,7 +112,7 @@ def main(yi, mi, di, yf, mf, df):
 
     # Two examples of how to specify a list of stations
     #stations = get_stations_from_networks()
-    stations = get_stations_from_filelist("mystations.txt")
+    stations = get_stations_from_filelist("functions/mystations.txt")
     for station in stations:
         uri = "%s&station=%s" % (service, station)
         print("Downloading: %s" % (station,))

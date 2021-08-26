@@ -6,7 +6,7 @@ Created on Tue Aug 17 15:06:28 2021
 @author: adelgado
 """
 
-import download_iem as iem
+import functions.download_iem as iem
 import pandas as pd
 import numpy as np
 import glob
@@ -17,16 +17,16 @@ import pickle as pkl
 iem.main(yi= 2017, mi=8, di= 30, yf = 2018, mf=1, df=2)
 
 # This move to raw folder in Mac Os and Linux
-!mv LP*.txt ../02_data/raw/
+!mv LP*.txt 02_data/raw/
 
 #%% 
 
-files = [file for file in sorted(glob.glob('../02_data/raw/*.txt'))]
+files = [file for file in sorted(glob.glob('02_data/raw/*.txt'))]
 
 #%% Processing the data
 met = {}
-stations = ['LPAR', 'LPCS', 'LPOV', 'LPPR', 'LPPT', 'LPST']
-stat_df = pd.DataFrame(index = stations)
+stations = pd.read_csv('functions/mystations.txt', header = None ).iloc[:,0].tolist()
+stat_df  = pd.DataFrame(index = stations)
 
 dates = pd.date_range(start = '2017-08-30 00:00', end = '2018-01-01 23:00',
                       freq = 'H', tz = 'UTC')
@@ -62,17 +62,17 @@ for f,n in zip(files, stations):
                   inplace = True)
      
 # Export data as pickle     
-with open('../02_data/processed/met.pkl', 'wb') as handle:
+with open('02_data/processed/met.pkl', 'wb') as handle:
     pkl.dump(met, handle, protocol=pkl.HIGHEST_PROTOCOL)
     
 # Export stations as csv
-stat_df.to_csv('stations.csv')
+stat_df.to_csv('01_scripts/stations.csv')
     
 #%% Figures --------------------------------------------------------------------
 
 labels = ['%', 'ºC', 'm s$^{-1}$', 'degree']
 
-fig1, ax = plt.subplots(6, figsize = (10,14),sharex = True, 
+fig1, ax = plt.subplots(7, figsize = (10,14),sharex = True, 
                        gridspec_kw={'hspace': 0.25})
 for i, n in enumerate(stations):
     #for p in ['']
@@ -83,7 +83,7 @@ for i, n in enumerate(stations):
                 legend = False)
     ax[i].set_title(n, loc = 'left')
 
-fig1.savefig('../03_output/fig/analysis/t2_all.pdf', bbox_inches = 'tight', 
+fig1.savefig('03_output/fig/analysis/t2_all.pdf', bbox_inches = 'tight', 
              facecolor = 'w')
 
 for i, n in enumerate(stations):
@@ -97,7 +97,7 @@ for i, n in enumerate(stations):
         
     fig2.legend(['Relative \n humidity', '2 m Temp.', 'Wind \nspeed', 'Wind \ndirection'], 
                 bbox_to_anchor = (1.05, 0.6))
-    fig2.savefig('../03_output/fig/analysis/'+ n +'.pdf', bbox_inches = 'tight', 
+    fig2.savefig('03_output/fig/analysis/'+ n +'.pdf', bbox_inches = 'tight', 
                  facecolor = 'w')
 
 
