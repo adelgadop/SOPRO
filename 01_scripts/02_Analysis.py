@@ -85,7 +85,7 @@ def fig_param(dct, p_obs, p_mod, stations, size_fig, ylabel, path):
 # We use the function to print the figure
 fig_param(dct,'tc_obs', 'tc_mod', 
           stations, 
-          size_fig = (6,10), 
+          size_fig = (8,10), 
           ylabel = '2-m temperature [ºC]',
           path = '03_output/fig/analysis/temp.pdf')
 
@@ -93,7 +93,7 @@ fig_param(dct,'tc_obs', 'tc_mod',
 
 fig_param(dct,'rh_obs', 'rh_mod', 
           stations, 
-          size_fig = (6,10), 
+          size_fig = (8,10), 
           ylabel = 'Relative humidity [%]',
           path = '03_output/fig/analysis/rel_hum.pdf')
 
@@ -102,7 +102,7 @@ fig_param(dct,'rh_obs', 'rh_mod',
 
 fig_param(dct, 'ws_obs', 'ws_mod', 
           stations, 
-          size_fig = (6,10), 
+          size_fig = (8,10), 
           ylabel = 'Wind speed [m s$^{-1}$]',
           path = '03_output/fig/analysis/wind_speed.pdf')
 
@@ -110,7 +110,7 @@ fig_param(dct, 'ws_obs', 'ws_mod',
 
 fig_param(dct, 'wd_obs', 'wd_mod', 
           stations, 
-          size_fig = (6,10), 
+          size_fig = (8,10), 
           ylabel = 'Wind direction [degree]',
           path = '03_output/fig/analysis/wind_direction.pdf')
 
