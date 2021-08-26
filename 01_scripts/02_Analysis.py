@@ -11,6 +11,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle as pkl
+import functions.mod_stats as ms
 
 #%% Import the observed and modeled data -------------------------------------
 
@@ -29,23 +30,29 @@ mod = {**mod_d02, **mod_d03}
 stations = list(pd.read_csv('01_scripts/stations.csv').code)
 
 # Merge two type of data
-df = {}
+dct = {}
 for k in stations:
-    df[k] = mod[k].merge(obs[k], 
+    dct[k] = mod[k].merge(obs[k], 
                          on = 'local_date', 
                          how = 'left', 
                          suffixes = ('_mod', '_obs')).drop(['date_mod', 
                                                             'date_obs'],
                                                             axis = 1)
-    df[k] = df[k].iloc[48:,:] # spin-up of two days
+                                
+    #df[k] = df[k].iloc[48:,:] # spin-up of two days
 
 
 #%% Temperature (tc) ---------------------------------------------------------
 
-def fig_param(p_obs, p_mod, stations, size_fig, ylabel, path):
+def fig_param(dct, p_obs, p_mod, stations, size_fig, ylabel, path):
     """
+    
+    
     Parameter
     ---------
+    dct: Dictionary
+        Stations name with pandas DataFrame
+    
     p_obs:
         
     p_mod:
@@ -56,12 +63,12 @@ def fig_param(p_obs, p_mod, stations, size_fig, ylabel, path):
                            figsize = size_fig, gridspec_kw={'hspace':0.3})
 
     for i, k in enumerate(stations):
-        df[k][['local_date', 
-               p_mod]].plot(x='local_date', style = ['g-'], lw = 4,
+        dct[k][['local_date', 
+               p_mod]].plot(x='local_date', style = ['g-'], lw = 2.5,
                                alpha = .7, ax = ax[i], legend = False)
-        df[k][['local_date', 
+        dct[k][['local_date', 
                p_obs]].plot(x='local_date', style = ['k.'], ax = ax[i],
-                               legend = False)
+                               legend = False, markersize = 2)
                                
         ax[i].set_title(k, loc = 'left', fontsize = 8)
         ax[i].set_xlabel('Local date')
@@ -76,37 +83,46 @@ def fig_param(p_obs, p_mod, stations, size_fig, ylabel, path):
 
                        
 # We use the function to print the figure
-fig_param('tc_obs', 'tc_mod', 
+fig_param(dct,'tc_obs', 'tc_mod', 
           stations, 
-          size_fig = (6,8), 
+          size_fig = (6,10), 
           ylabel = '2-m temperature [ºC]',
           path = '03_output/fig/analysis/temp.pdf')
 
-#%% Relative humidity --------------------------------------------------------
-# obs = relh
-# mod = rh
+# Relative humidity --------------------------------------------------------
 
-fig_param('relh', 'rh', 
+fig_param(dct,'rh_obs', 'rh_mod', 
           stations, 
-          size_fig = (6,8), 
+          size_fig = (6,10), 
           ylabel = 'Relative humidity [%]',
           path = '03_output/fig/analysis/rel_hum.pdf')
 
 
-#%% Wind speed ---------------------------------------------------------------
+# Wind speed ---------------------------------------------------------------
 
-fig_param('ws_obs', 'ws_mod', 
+fig_param(dct, 'ws_obs', 'ws_mod', 
           stations, 
-          size_fig = (6,8), 
+          size_fig = (6,10), 
           ylabel = 'Wind speed [m s$^{-1}$]',
           path = '03_output/fig/analysis/wind_speed.pdf')
 
-#%% Wind direction ---------------------------------------------------------------
+# Wind direction ---------------------------------------------------------------
 
-fig_param('wd_obs', 'wd_mod', 
+fig_param(dct, 'wd_obs', 'wd_mod', 
           stations, 
-          size_fig = (6,8), 
+          size_fig = (6,10), 
           ylabel = 'Wind direction [degree]',
           path = '03_output/fig/analysis/wind_direction.pdf')
-                                                            
-                                    
+
+#%% Statistical evaluation -----------------------------------------------------
+
+df = pd.DataFrame()
+for k in stations:
+    res = ms.met_stats(dct[k], mets = ['tc','rh','ws','wd'])
+    res['name'] = k
+    df = pd.concat([df, res])
+
+df.dropna(thresh=3,inplace = True)
+df.sort_index(inplace = True)
+
+df.round(2).to_csv('03_output/tab/sep17_statistics.csv')
