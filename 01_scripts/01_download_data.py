@@ -27,6 +27,7 @@ files = [file for file in sorted(glob.glob('02_data/raw/*.txt'))]
 met = {}
 stations = pd.read_csv('functions/mystations.txt', header = None ).iloc[:,0].tolist()
 stat_df  = pd.DataFrame(index = stations)
+stat_df.index.name = 'code' # adding an index name
 
 dates = pd.date_range(start = '2017-08-30 00:00', end = '2018-01-01 23:00',
                       freq = 'H', tz = 'UTC')
@@ -50,6 +51,7 @@ for f,n in zip(files, stations):
      met[n]['tc'] = (met[n]['tmpf'] -32)*5/9
      met[n]['ws'] = met[n]['sknt']*0.514444
      met[n]['wd'] = met[n]['drct']
+     met[n].rename(columns={'relh':'rh'}, inplace = True)
      met[n].set_index('date', inplace = True)
      
      met[n].drop(['valid', 'station','lon', 'lat',
