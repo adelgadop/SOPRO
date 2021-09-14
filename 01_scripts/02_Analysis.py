@@ -12,8 +12,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pickle as pkl
 import functions.mod_stats as ms
+import glob
 
 #%% Import the observed and modeled data -------------------------------------
+
+month = '12'
 
 # Observations
 obs = pkl.load(open('02_data/processed/met.pkl', 'rb'))
@@ -21,10 +24,9 @@ for k in obs.keys():
     obs[k].reset_index(inplace = True)
     obs[k]['local_date'] = obs[k]['date'].dt.tz_convert('Europe/Lisbon')
 
-
 # Simulations using WRF
-mod_d02 = pkl.load(open('02_data/processed/curr_d02_2017_09.pkl', 'rb'))
-mod_d03 = pkl.load(open('02_data/processed/curr_d03_2017_09.pkl', 'rb'))
+mod_d02 = pkl.load(open('02_data/processed/curr_d02_2017_'+month+'.pkl', 'rb'))
+mod_d03 = pkl.load(open('02_data/processed/curr_d03_2017_'+month+'.pkl', 'rb'))
 mod = {**mod_d02, **mod_d03}
 
 stations = list(pd.read_csv('01_scripts/stations.csv').code)
@@ -42,7 +44,7 @@ for k in stations:
     #df[k] = df[k].iloc[48:,:] # spin-up of two days
 
 
-#%% Temperature (tc) ---------------------------------------------------------
+# Temperature (tc) ---------------------------------------------------------
 
 def fig_param(dct, p_obs, p_mod, stations, size_fig, ylabel, path):
     """
@@ -87,7 +89,7 @@ fig_param(dct,'tc_obs', 'tc_mod',
           stations, 
           size_fig = (8,10), 
           ylabel = '2-m temperature [ºC]',
-          path = '03_output/fig/analysis/temp.pdf')
+          path = '03_output/fig/analysis/temp'+month+'.pdf')
 
 # Relative humidity --------------------------------------------------------
 
@@ -95,7 +97,7 @@ fig_param(dct,'rh_obs', 'rh_mod',
           stations, 
           size_fig = (8,10), 
           ylabel = 'Relative humidity [%]',
-          path = '03_output/fig/analysis/rel_hum.pdf')
+          path = '03_output/fig/analysis/rel_hum'+month+'.pdf')
 
 
 # Wind speed ---------------------------------------------------------------
@@ -104,7 +106,7 @@ fig_param(dct, 'ws_obs', 'ws_mod',
           stations, 
           size_fig = (8,10), 
           ylabel = 'Wind speed [m s$^{-1}$]',
-          path = '03_output/fig/analysis/wind_speed.pdf')
+          path = '03_output/fig/analysis/wind_speed'+month+'.pdf')
 
 # Wind direction ---------------------------------------------------------------
 
@@ -112,9 +114,9 @@ fig_param(dct, 'wd_obs', 'wd_mod',
           stations, 
           size_fig = (8,10), 
           ylabel = 'Wind direction [degree]',
-          path = '03_output/fig/analysis/wind_direction.pdf')
+          path = '03_output/fig/analysis/wind_direction'+month+'.pdf')
 
-#%% Statistical evaluation -----------------------------------------------------
+# Statistical evaluation -----------------------------------------------------
 
 df = pd.DataFrame()
 for k in stations:
@@ -125,4 +127,4 @@ for k in stations:
 df.dropna(thresh=3,inplace = True)
 df.sort_index(inplace = True)
 
-df.round(2).to_csv('03_output/tab/sep17_statistics.csv')
+df.round(2).to_csv('03_output/tab/'+month+'_2017_statistics.csv')
