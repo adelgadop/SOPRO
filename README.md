@@ -33,12 +33,12 @@ The tasks are describing as following:
       - [ ] Explore [ERA Interim](https://rda.ucar.edu/datasets/ds627.0/) as meteorological initial and boundary conditions at 6 h and 0.75º temporal and spatial resolution, respectively.
       - [ ] Download ERA Interim and run the WRF-ARW.
    - [ ] Sep - Dec 2017. Resolution of 3 km, according to the agrreement in the meeting.
-      - [ ] NCEP GDAS/FNL 0.25 degree
+      - [x] NCEP GDAS/FNL 0.25 degree
       - [ ] Era Interim   
    - [ ] Evaluate the meteorological simulations for Portugal against the observations for three or more meteorological stations using Python.
       - [ ] NCEP GDAS/FNL 0.25 degree
       - [ ] Era Interim 
-- [ ] Review meteorological observations inside the modeling domain area.
+- [x] Review meteorological observations inside the modeling domain area.
 - [ ] Write a Thesis Proposal for the PhD. This proposal will useful to be admitted to the IAG (USP) as part of the program of PhD studies.
   - [ ] Review articles about aerosol speciation, sources, CMAQ, urban issues about air quality risk over human health.
   - [ ] Write a justification and motivation.
