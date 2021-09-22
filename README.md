@@ -36,7 +36,7 @@ The tasks are describing as following:
       - [x] NCEP GDAS/FNL 0.25 degree
       - [ ] Era Interim   
    - [ ] Evaluate the meteorological simulations for Portugal against the observations for three or more meteorological stations using Python.
-      - [ ] NCEP GDAS/FNL 0.25 degree
+      - [x] NCEP GDAS/FNL 0.25 degree
       - [ ] Era Interim 
 - [x] Review meteorological observations inside the modeling domain area.
 - [ ] Write a Thesis Proposal for the PhD. This proposal will useful to be admitted to the IAG (USP) as part of the program of PhD studies.
