@@ -16,7 +16,7 @@ import glob
 
 #%% Import the observed and modeled data -------------------------------------
 
-month = '12'
+month = '09'
 
 # Observations
 obs = pkl.load(open('02_data/processed/met.pkl', 'rb'))
@@ -25,8 +25,8 @@ for k in obs.keys():
     obs[k]['local_date'] = obs[k]['date'].dt.tz_convert('Europe/Lisbon')
 
 # Simulations using WRF
-mod_d02 = pkl.load(open('02_data/processed/curr_d02_2017_'+month+'.pkl', 'rb'))
-mod_d03 = pkl.load(open('02_data/processed/curr_d03_2017_'+month+'.pkl', 'rb'))
+mod_d02 = pkl.load(open('02_data/processed/erai_d02_2017_'+month+'.pkl', 'rb'))
+mod_d03 = pkl.load(open('02_data/processed/erai_d03_2017_'+month+'.pkl', 'rb'))
 mod = {**mod_d02, **mod_d03}
 
 stations = list(pd.read_csv('01_scripts/stations.csv').code)
@@ -40,8 +40,9 @@ for k in stations:
                          suffixes = ('_mod', '_obs')).drop(['date_mod', 
                                                             'date_obs'],
                                                             axis = 1)
-                                
-    #df[k] = df[k].iloc[48:,:] # spin-up of two days
+    
+    # Only in case if you forgot to eliminate two first days of wrfout_ files              
+    dct[k] = dct[k].iloc[48:,:] # spin-up of two days
 
 
 # Temperature (tc) ---------------------------------------------------------
@@ -70,7 +71,7 @@ def fig_param(dct, p_obs, p_mod, stations, size_fig, ylabel, path):
                                alpha = .7, ax = ax[i], legend = False)
         dct[k][['local_date', 
                p_obs]].plot(x='local_date', style = ['k.'], ax = ax[i],
-                               legend = False, markersize = 2)
+                               legend = False, markersize = 4)
                                
         ax[i].set_title(k, loc = 'left', fontsize = 8)
         ax[i].set_xlabel('Local date')
@@ -87,7 +88,7 @@ def fig_param(dct, p_obs, p_mod, stations, size_fig, ylabel, path):
 # We use the function to print the figure
 fig_param(dct,'tc_obs', 'tc_mod', 
           stations, 
-          size_fig = (8,10), 
+          size_fig = (6,8), 
           ylabel = '2-m temperature [ºC]',
           path = '03_output/fig/analysis/temp'+month+'.pdf')
 
@@ -95,7 +96,7 @@ fig_param(dct,'tc_obs', 'tc_mod',
 
 fig_param(dct,'rh_obs', 'rh_mod', 
           stations, 
-          size_fig = (8,10), 
+          size_fig = (6,8), 
           ylabel = 'Relative humidity [%]',
           path = '03_output/fig/analysis/rel_hum'+month+'.pdf')
 
@@ -104,7 +105,7 @@ fig_param(dct,'rh_obs', 'rh_mod',
 
 fig_param(dct, 'ws_obs', 'ws_mod', 
           stations, 
-          size_fig = (8,10), 
+          size_fig = (6,8), 
           ylabel = 'Wind speed [m s$^{-1}$]',
           path = '03_output/fig/analysis/wind_speed'+month+'.pdf')
 
@@ -112,7 +113,7 @@ fig_param(dct, 'ws_obs', 'ws_mod',
 
 fig_param(dct, 'wd_obs', 'wd_mod', 
           stations, 
-          size_fig = (8,10), 
+          size_fig = (6,8), 
           ylabel = 'Wind direction [degree]',
           path = '03_output/fig/analysis/wind_direction'+month+'.pdf')
 
