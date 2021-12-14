@@ -4,19 +4,19 @@
  run_minutes                         = 0,
  run_seconds                         = 0,
  start_year                          = 2017, 2017, 2017,
- start_month                         = 09,   09,   09,
- start_day                           = 01,   01,   01,
+ start_month                         = 12,   12,   12,
+ start_day                           = 25,   25,   25,
  start_hour                          = 00,   00,   00,
- end_year                            = 2017, 2017, 2017,
- end_month                           = 09,   09,   09,
- end_day                             = 10,   10,   10,
- end_hour                            = 00,   00,   00,
+ end_year                            = 2018, 2018, 2018,
+ end_month                           = 01,   01,   01,
+ end_day                             = 01,   01,   01,
+ end_hour                            = 03,   03,   03,
  interval_seconds                    = 21600
  input_from_file                     = .true.,.true.,.true.,
  history_interval                    = 60,  60,   60,
  frames_per_outfile                  = 24, 24, 24,
 ! history_outname                     = "/scr2/alejandro/WRF/sopro/wrfout_met/wrfout_d<domain>_<date>"
- restart                             = .false.,          ! first run
+ restart                             = .true.,          ! first run
  restart_interval                    = 7200,             ! first run with 2 days of spin-up
  io_form_history                     = 2
  io_form_restart                     = 2
@@ -25,7 +25,7 @@
  /
 
  &domains
- time_step                           = 90,               ! 6*dx
+ time_step                           = 40,
  time_step_fract_num                 = 0,
  time_step_fract_den                 = 1,
  max_dom                             = 3,
@@ -33,7 +33,7 @@
  e_sn                                = 80,    51,   51,
  e_vert                              = 35,    35,   35,
  p_top_requested                     = 5000,
- num_metgrid_levels                  = 38,
+ num_metgrid_levels                  = 32,
  num_metgrid_soil_levels             = 4,
  dx                                  = 15000, 3000,  3000,
  dy                                  = 15000, 3000,  3000,
@@ -49,7 +49,7 @@
 
  &physics
 ! physics_suite                       = 'CONUS'
- mp_physics                          =  6,     6,     6,     ! Hong and Lim 2006
+ mp_physics                          =  3,     3,     3,     ! Hong, Dudhia and Chen
  cu_physics                          =  5,     0,     0,     ! Grell freitas only for D01
  ra_lw_physics                       =  1,     1,     1,
  ra_sw_physics                       =  4,     4,     4,
@@ -60,7 +60,7 @@
  bldt                                = 0,     0,     0,
  cudt                                = 0,     0,     0,
  icloud                              = 1,
- num_land_cat                        = 21,                   ! before 21 
+ num_land_cat                        = 21,
  num_soil_layers                     = 4,
  sf_urban_physics                    = 1,     1,     1,      ! Urban canopy model 3-category UCM = 1
  /
