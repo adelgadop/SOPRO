@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 from ecmwfapi import ECMWFDataServer
 server = ECMWFDataServer(url="https://api.ecmwf.int/v1",
-                         key="4c68d8ca6b594b8624233acbfb91ef31",
-                         email="adelgado@iag.usp.br")
+                         key="",
+                         email="")
 
 server.retrieve({
     "class": "ei",
