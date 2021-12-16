@@ -41,7 +41,7 @@ The tasks are describing as following:
       - [x] NCEP GDAS/FNL 0.25 degree
       - [x] Era Interim 
 - [x] Review meteorological observations inside the modeling domain area.
-- [ ] Write a Thesis Proposal for the PhD. This proposal will useful to be admitted to the IAG (USP) as part of the program of PhD studies.
+- [x] Write a Thesis Proposal for the PhD. This proposal will useful to be admitted to the IAG (USP) as part of the program of PhD studies.
   - [x] Review articles about aerosol speciation, sources, CMAQ, urban issues about air quality risk over human health.
   - [x] Write a justification and motivation.
   - [x] Objectives for the PhD research.
