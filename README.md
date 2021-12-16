@@ -28,27 +28,29 @@ The tasks are describing as following:
 
 ![image](https://user-images.githubusercontent.com/52834007/128647685-ef32100e-9d63-4ad9-810a-7d136063e4c7.png)
 
-   - [ ] ERA Interim
-      - [ ] Explore these websites: [Conor](https://conorsweeneyucd.blogspot.com/2015/01/download-era-interim-data.html), [dreambooker](https://dreambooker.site/2018/04/20/Initializing-the-WRF-model-with-ERA5/) about how download and automatize this process for initializing WRF-ARW.
-      - [ ] Explore [ERA Interim](https://rda.ucar.edu/datasets/ds627.0/) as meteorological initial and boundary conditions at 6 h and 0.75º temporal and spatial resolution, respectively.
-      - [ ] Download ERA Interim and run the WRF-ARW.
+   - [x] ERA Interim
+      - [x] Explore these websites: [Conor](https://conorsweeneyucd.blogspot.com/2015/01/download-era-interim-data.html), [dreambooker](https://dreambooker.site/2018/04/20/Initializing-the-WRF-model-with-ERA5/) about how download and automatize this process for initializing WRF-ARW.
+      - [x] Explore [ERA Interim](https://rda.ucar.edu/datasets/ds627.0/) as meteorological initial and boundary conditions at 6 h and 0.75º temporal and spatial resolution, respectively.
+      - [x] Download ERA Interim and run the WRF-ARW.
    - [ ] Sep - Dec 2017. Resolution of 3 km, according to the agrreement in the meeting.
       - [x] NCEP GDAS/FNL 0.25 degree
-      - [ ] Era Interim   
+      - [ ] Era Interim
+   - [ ] Sep - Dec 2017. Resolution of 1 km, according to the agrreement in the meeting.
+      - [ ] NCEP GDAS/FNL 0.25 degree
    - [ ] Evaluate the meteorological simulations for Portugal against the observations for three or more meteorological stations using Python.
       - [x] NCEP GDAS/FNL 0.25 degree
-      - [ ] Era Interim 
+      - [x] Era Interim 
 - [x] Review meteorological observations inside the modeling domain area.
 - [ ] Write a Thesis Proposal for the PhD. This proposal will useful to be admitted to the IAG (USP) as part of the program of PhD studies.
-  - [ ] Review articles about aerosol speciation, sources, CMAQ, urban issues about air quality risk over human health.
-  - [ ] Write a justification and motivation.
-  - [ ] Objectives for the PhD research.
-  - [ ] Methodology
-  - [ ] Schedule for the PhD research.
+  - [x] Review articles about aerosol speciation, sources, CMAQ, urban issues about air quality risk over human health.
+  - [x] Write a justification and motivation.
+  - [x] Objectives for the PhD research.
+  - [x] Methodology
+  - [x] Schedule for the PhD research.
 - [ ] CMAQ
   - [ ] Introduction of CMAQ. Review tutorial videos in YouTube of **[`NQualiAr`](https://www.youtube.com/channel/UCIc6KMeWteIZ55VIMiQI-5w)**.
   - [ ] Review guidelines about model install and running. After that, review articles about CMAQ for aerosols for urban areas.
-  - [ ] Modeling practice with CMAQ. Use a tutorial as an example to run CMAQ.
+  - [x] Modeling practice with CMAQ. Use a tutorial as an example to run CMAQ.
   - [ ] Run CMAQ for Portugal and for the modeling domain of interest for the SOPRO Project, using WRF simulations. Evaluate results about aerosol formation and source profiles.
 
 My email is <adelgado@iag.usp.br> if you want to get in touch.
