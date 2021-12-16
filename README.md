@@ -34,7 +34,7 @@ The tasks are describing as following:
       - [x] Download ERA Interim and run the WRF-ARW.
    - [ ] Sep - Dec 2017. Resolution of 3 km, according to the agrreement in the meeting.
       - [x] NCEP GDAS/FNL 0.25 degree
-      - [ ] Era Interim
+      - [x] Era Interim
    - [ ] Sep - Dec 2017. Resolution of 1 km, according to the agrreement in the meeting.
       - [ ] NCEP GDAS/FNL 0.25 degree
    - [ ] Evaluate the meteorological simulations for Portugal against the observations for three or more meteorological stations using Python.
