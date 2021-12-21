@@ -25,34 +25,34 @@ for k in obs.keys():
     obs[k]['local_date'] = obs[k]['date'].dt.tz_convert('Europe/Lisbon')
 
 # Simulations using WRF
-mod_d02 = pkl.load(open('02_data/processed/erai_d02_2017_'+month+'.pkl', 'rb'))
-mod_d03 = pkl.load(open('02_data/processed/erai_d03_2017_'+month+'.pkl', 'rb'))
-erai = {**mod_d02, **mod_d03}
+mod_d03 = pkl.load(open('02_data/processed/gdas_1km_d03_2017_'+month+'.pkl', 'rb'))
+mod_d04 = pkl.load(open('02_data/processed/gdas_1km_d04_2017_'+month+'.pkl', 'rb'))
+gdas = mod_d03
 
 mod_d02 = pkl.load(open('02_data/processed/curr_d02_2017_'+month+'.pkl', 'rb'))
 mod_d03 = pkl.load(open('02_data/processed/curr_d03_2017_'+month+'.pkl', 'rb'))
-mod = {**mod_d02, **mod_d03}
+mod = mod_d02
 
 stations = list(pd.read_csv('01_scripts/stations.csv').code)
 
 #%% Merge three type of data
 dct = {}
 for k in stations:
-    dct[k] = erai[k].merge(mod[k], 
+    dct[k] = gdas[k].merge(mod[k], 
                          on = 'local_date', 
                          how = 'left', 
-                         suffixes = ('_erai', 
+                         suffixes = ('_gdas', 
                                      '_mod')).merge(obs[k],
                                                     on = 'local_date',
-                                                    how = 'left').drop(['date_erai',
+                                                    how = 'left').drop(['date_gdas',
                                                                         'date_mod',
-                                                                        'code_erai',
+                                                                        'code_gdas',
                                                                         'code_mod'],
                                                                         axis = 1) 
 
     
     # Only in case if you forgot to eliminate two first days of wrfout_ files              
-    dct[k] = dct[k].iloc[48:,:] # spin-up of two days
+    #dct[k] = dct[k].iloc[48:,:] # spin-up of two days
 
 
 #%% Temperature (tc) ---------------------------------------------------------
@@ -114,7 +114,7 @@ fig_param(dct,'tc', 'tc_mod', 'tc_erai',
           stations, 
           size_fig = (5,10), 
           ylabel = '2-m temperature [ºC]',
-          path = '03_output/fig/analysis/temp'+month+'.pdf')
+          path = '03_output/fig/analysis/temp_1km'+month+'.pdf')
 
 #%% Relative humidity --------------------------------------------------------
 
@@ -122,7 +122,7 @@ fig_param(dct,'rh', 'rh_mod', 'rh_erai',
           stations, 
           size_fig = (5,10), 
           ylabel = 'Relative humidity [%]',
-          path = '03_output/fig/analysis/rel_hum'+month+'.pdf')
+          path = '03_output/fig/analysis/rel_hum_1km'+month+'.pdf')
 
 
 # Wind speed ---------------------------------------------------------------
@@ -131,7 +131,7 @@ fig_param(dct, 'ws', 'ws_mod', 'ws_erai',
           stations, 
           size_fig = (5,10), 
           ylabel = 'Wind speed [m s$^{-1}$]',
-          path = '03_output/fig/analysis/wind_speed'+month+'.pdf')
+          path = '03_output/fig/analysis/wind_speed_1km'+month+'.pdf')
 
 # Wind direction ---------------------------------------------------------------
 
@@ -139,7 +139,7 @@ fig_param(dct, 'wd', 'wd_mod', 'wd_erai',
           stations, 
           size_fig = (5,10), 
           ylabel = 'Wind direction [degree]',
-          path = '03_output/fig/analysis/wind_direction'+month+'.pdf')
+          path = '03_output/fig/analysis/wind_direction_1km'+month+'.pdf')
 
 #%% Statistical evaluation -----------------------------------------------------
 month = '09'
@@ -151,8 +151,8 @@ for k in obs.keys():
     obs[k]['local_date'] = obs[k]['date'].dt.tz_convert('Europe/Lisbon')
 
 # Simulations using WRF from ERA Interim as IC/BC
-mod_d02 = pkl.load(open('02_data/processed/erai_d02_2017_'+month+'.pkl', 'rb'))
-mod_d03 = pkl.load(open('02_data/processed/erai_d03_2017_'+month+'.pkl', 'rb'))
+mod_d02 = pkl.load(open('02_data/processed/gdas_1km_d03_2017_'+month+'.pkl', 'rb'))
+mod_d03 = pkl.load(open('02_data/processed/gdas_1km_d04_2017_'+month+'.pkl', 'rb'))
 mod = {**mod_d02, **mod_d03}
 
 stations = list(pd.read_csv('01_scripts/stations.csv').code)
@@ -180,4 +180,4 @@ for k in stations:
 df.dropna(thresh=3,inplace = True)
 df.sort_index(inplace = True)
 
-df.round(2).to_csv('03_output/tab/'+month+'_2017_statistics.csv')
+df.round(2).to_csv('03_output/tab/'+month+'_1km_2017_statistics.csv')
