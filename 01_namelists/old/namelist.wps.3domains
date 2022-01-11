@@ -1,0 +1,50 @@
+&share
+ wrf_core = 'ARW',
+ max_dom = 3,
+ start_date = '2018-01-01_00:00:00','2018-01-01_00:00:00', '2018-01-01_00:00:00',
+ end_date   = '2018-01-01_06:00:00','2018-01-01_06:00:00', '2018-01-01_06:00:00',
+ interval_seconds = 21600
+ io_form_geogrid = 2,
+/
+
+&geogrid
+ parent_id         =   1,   1,  1,         ! two diferent modeling domain areas
+ parent_grid_ratio =   1,   5,  5,         ! 3 km of spatial resolution
+ i_parent_start    =   1,  22, 20,
+ j_parent_start    =   1,  46, 25,
+ e_we              =  50,  51, 51,
+ e_sn              =  80,  51, 51,
+ !
+ !!!!!!!!!!!!!!!!!!!!!!!!!!!! IMPORTANT NOTE !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ ! The default datasets used to produce the MAXSNOALB and ALBEDO12M
+ ! fields have changed in WPS v4.0. These fields are now interpolated
+ ! from MODIS-based datasets.
+ !
+ ! To match the output given by the default namelist.wps in WPS v3.9.1,
+ ! the following setting for geog_data_res may be used:
+ !
+ ! geog_data_res = 'maxsnowalb_ncep+albedo_ncep+default', 'maxsnowalb_ncep+albedo_ncep+default', 
+ !
+ !!!!!!!!!!!!!!!!!!!!!!!!!!!! IMPORTANT NOTE !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ !
+ geog_data_res = 'maxsnowalb_ncep+albedo_ncep+default', 'maxsnowalb_ncep+albedo_ncep+default',
+ dx = 15000,
+ dy = 15000,
+ map_proj = 'lambert',
+ ref_lat   =  39.99,
+ ref_lon   = -8.78,
+ truelat1  =  45.0,
+ truelat2  =  30.0,
+ stand_lon = -9.0,
+ geog_data_path = '/scr2/alejandro/WRF/DATA/GEOG/'
+/
+
+&ungrib
+ out_format = 'WPS',
+ prefix = 'FILE',
+/
+
+&metgrid
+ fg_name = 'FILE'
+ io_form_metgrid = 2, 
+/
