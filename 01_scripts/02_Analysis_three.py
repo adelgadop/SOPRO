@@ -27,11 +27,11 @@ for k in obs.keys():
 # Simulations using WRF
 mod_d03 = pkl.load(open('02_data/processed/gdas_1km_d03_2017_'+month+'.pkl', 'rb'))
 mod_d04 = pkl.load(open('02_data/processed/gdas_1km_d04_2017_'+month+'.pkl', 'rb'))
-gdas = mod_d03
+gdas = {**mod_d03, **mod_d03}
 
 mod_d02 = pkl.load(open('02_data/processed/curr_d02_2017_'+month+'.pkl', 'rb'))
 mod_d03 = pkl.load(open('02_data/processed/curr_d03_2017_'+month+'.pkl', 'rb'))
-mod = mod_d02
+mod = {**mod_d02, **mod_d03}
 
 stations = list(pd.read_csv('01_scripts/stations.csv').code)
 
