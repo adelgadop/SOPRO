@@ -25,8 +25,8 @@ for k in obs.keys():
     obs[k]['local_date'] = obs[k]['date'].dt.tz_convert('Europe/Lisbon')
 
 # Simulations using WRF
-mod_d02 = pkl.load(open('02_data/processed/erai_d02_2017_'+month+'.pkl', 'rb'))
-mod_d03 = pkl.load(open('02_data/processed/erai_d03_2017_'+month+'.pkl', 'rb'))
+mod_d02 = pkl.load(open('02_data/processed/1km_d03_2017_'+month+'.pkl', 'rb'))
+mod_d03 = pkl.load(open('02_data/processed/1km_d04_2017_'+month+'.pkl', 'rb'))
 mod = {**mod_d02, **mod_d03}
 
 stations = list(pd.read_csv('01_scripts/stations.csv').code)
