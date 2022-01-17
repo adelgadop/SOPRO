@@ -22,6 +22,9 @@ ws = wind.sel(wspd_wdir='wspd')
 wd = wind.sel(wspd_wdir='wdir')
 psfc = wrf.getvar(wrfout, 'PSFC', timeidx=wrf.ALL_TIMES, method='cat')
 
+lon = t2.XLONG[0,:].values
+lat = t2.XLAT[:,0].values
+
 # print("Extracting polutants variables...")
 # o3 = wrf.getvar(wrfout, 'o3', timeidx=wrf.ALL_TIMES, method='cat')
 
@@ -44,6 +47,10 @@ hf.create_dataset('wind', data = wind, compression = 'gzip', compression_opts=9)
 hf.create_dataset('psfc', data = psfc, compression = 'gzip', compression_opts=9)
 #hf.create_dataset('o3_u', data = o3_u, compression = 'gzip', compression_opts=9)
 hf.close()
+
+np.save('../02_data/processed/'+'lon_'+domain+'_'+str(year)+str(month)+'.npy', lon)
+np.save('../02_data/processed/'+'lat_'+domain+'_'+str(year)+str(month)+'.npy', lat)
+
 print('''
 !!!!!!!!!!!!!!!!!
 !! Succesfully !!
