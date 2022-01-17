@@ -60,8 +60,8 @@ def latlon_ij(inlat, inlon, xlat, xlong):
                 dlat = dlat / dfactor
                 dlon = dlon / dfactor
                 if loopcount > 2000:
-                    print "loopcount= ", loopcount
-                    print "TOO MANY LOOPS. QUITTING"                   
+                    print( "loopcount= ", loopcount)
+                    print( "TOO MANY LOOPS. QUITTING"  )                 
                     sys.exit()
                 loopcount += 1
             if (np.shape(i)[0] == 0) or (np.shape(j)[0] == 0):
@@ -70,7 +70,7 @@ def latlon_ij(inlat, inlon, xlat, xlong):
             if (np.shape(i)[0] == 1) & (np.shape(j)[0] == 1): 
                 loop = 0
         #print "i,j found is: ", i,j
-        print "Nearest Lat/Lon is: ", xlat[0,i[0],j[0]], xlong[0,i[0],j[0]]
+        print( "Nearest Lat/Lon is: ", xlat[0,i[0],j[0]], xlong[0,i[0],j[0]])
         
         return i[0], j[0]
 
@@ -86,7 +86,7 @@ def latlon_ij2(inlat, inlon, xlat, xlong):
     i, j index of nearest Lat/Lon to entered Lat/Lon
     """
     if (inlat < np.min(xlat[0])) or (inlat > np.max(xlat[0])) or (inlon < np.min(xlong[0])) or (inlon > np.max(xlong[0])):
-        print "Lat/Lon entered out of range of domain"
+        print( "Lat/Lon entered out of range of domain")
         sys.exit()
     i = np.argmax(xlat[0] > inlat)
     j = np.argmax(xlong[0] > inlon)
@@ -98,7 +98,7 @@ def latlon_ij2(inlat, inlon, xlat, xlong):
     newi = np.unravel_index(i, xlat[0].shape)
     newj = np.unravel_index(j, xlong[0].shape)
     #print "i,j of original array: ", newi, newj
-    print "Nearest Lat/Lon is: ", xlat[0,newi[0],newi[1]], xlong[0,newj[0],newj[1]]
+    print( "Nearest Lat/Lon is: ", xlat[0,newi[0],newi[1]], xlong[0,newj[0],newj[1]])
 
     return newi,newj
 
