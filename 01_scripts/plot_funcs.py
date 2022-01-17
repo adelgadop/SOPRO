@@ -73,17 +73,17 @@ def do_sharppy(spc_file):
     mlpcl = params.parcelx( prof, flag=4 ) # 100 mb Mean Layer Parcel
          
     msl_hght = prof.hght[prof.sfc] # Grab the surface height value
-    print "SURFACE HEIGHT (m MSL):",msl_hght
+    print( "SURFACE HEIGHT (m MSL):",msl_hght)
     agl_hght = interp.to_agl(prof, msl_hght) # Converts to AGL
-    print "SURFACE HEIGHT (m AGL):", agl_hght
+    print( "SURFACE HEIGHT (m AGL):", agl_hght)
     msl_hght = interp.to_msl(prof, agl_hght) # Converts to MSL
-    print "SURFACE HEIGHT (m MSL):",msl_hght
-    print "Most-Unstable CAPE:", mupcl.bplus # J/kg
-    print "Most-Unstable CIN:", mupcl.bminus # J/kg
-    print "Most-Unstable LCL:", mupcl.lclhght # meters AGL
-    print "Most-Unstable LFC:", mupcl.lfchght # meters AGL
-    print "Most-Unstable EL:", mupcl.elhght # meters AGL
-    print "Most-Unstable LI:", mupcl.li5 # C
+    print( "SURFACE HEIGHT (m MSL):",msl_hght)
+    print( "Most-Unstable CAPE:", mupcl.bplus) # J/kg
+    print( "Most-Unstable CIN:", mupcl.bminus) # J/kg
+    print( "Most-Unstable LCL:", mupcl.lclhght) # meters AGL
+    print( "Most-Unstable LFC:", mupcl.lfchght) # meters AGL
+    print( "Most-Unstable EL:", mupcl.elhght) # meters AGL
+    print( "Most-Unstable LI:", mupcl.li5) # C
     
     class SkewXTick(maxis.XTick):
         def draw(self, renderer):
