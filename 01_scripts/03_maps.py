@@ -28,27 +28,6 @@ from mpl_toolkits.axes_grid1 import AxesGrid
 from cartopy.io.shapereader import Reader
 from cartopy.feature import ShapelyFeature
 
-#%% MDA8 diferences for September and October --------------------------------
-path = '../data/wrfout/'
-wrfout = [Dataset(i) for i in sorted(glob.glob(path+'wrfout_d02*'))]
-
-t2 = wrf.getvar(wrfout, 'T2', timeidx=wrf.ALL_TIMES, method='cat')
-rh2 = wrf.getvar(wrfout, 'rh2', timeidx=wrf.ALL_TIMES, method='cat')
-wind = wrf.getvar(wrfout, 'uvmet10_wspd_wdir', timeidx=wrf.ALL_TIMES, method='cat')
-ws = wind.sel(wspd_wdir='wspd')
-wd = wind.sel(wspd_wdir='wdir')
-psfc = wrf.getvar(wrfout, 'PSFC', timeidx=wrf.ALL_TIMES, method='cat')
-
-o3 = wrf.getvar(wrfout, 'o3', timeidx=wrf.ALL_TIMES, method='cat')
-o3_sfc  = o3.isel(bottom_top=0)
-R = 8.3144598 # J/K mol
-o3_u = o3_sfc * psfc * (16 * 3) / (R * t2)
-o3_u[0,:,:].plot()
-
-lon = t2.XLONG[0,:].values
-lat = t2.XLAT[:,0].values
-print(lon, lat)
-
 #%% Import processed data
 
 path = '02_data/processed/'
@@ -61,7 +40,6 @@ data = {
             't2'  : d02.get('t2')[3:,:,:],
             'rh2' : d02.get('rh2')[3:,:,:],
             'wind': d02.get('wind')[3:,:,:],
-            'lon' : d02.get('lon')
             },
         "d03" : {
             't2'  : d03.get('t2')[3:,:,:],
@@ -77,7 +55,38 @@ data = {
 
 for f in [d02, d03, d04]:
     f.close()
-    
-#%%
 
 print(data['d02']['t2'].shape)
+
+# Reading lon and lat
+lon = {'d02': np.load(path + 'lon_d02_201709.npy'),
+       'd03': np.load(path + 'lon_d03_201709.npy'),
+       'd04': np.load(path + 'lon_d04_201709.npy')
+       }
+
+lat = {'d02': np.load(path + 'lat_d02_201709.npy'),
+       'd03': np.load(path + 'lat_d03_201709.npy'),
+       'd04': np.load(path + 'lat_d04_201709.npy')
+       }
+
+# Local times as UTC
+horas = pd.date_range("2017-09-01 00:00", periods = 225, freq = 'H')
+
+# Make a Dataset for both months
+dset = {'d02': xr.Dataset(), 'd03': xr.Dataset(), 'd04': xr.Dataset}
+
+for k in dset.keys():
+    dset[k]['t2'] = (('time', 'lat', 'lon'), data[k]['t2'])
+    dset[k]['rh2'] = (('time', 'lat', 'lon'), data[k]['rh2'])
+    dset[k]['wind'] = (('time', 'lat', 'lon'), data[k]['wind'])
+    dset[k].coords['lat'] = (('lat'), lat[k])
+    dset[k].coords['lon'] = (('lon'), lon[k])
+    dset[k].coords['time'] = horas
+    dset[k].attrs['title'] = k
+    print(dset[k])
+
+dset['d02']['t2'][0,:,:].plot()
+
+
+#%%
+
