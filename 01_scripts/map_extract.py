@@ -13,7 +13,7 @@ print("Reading each wrfout...")
 month = input('month (e.g., 09): ')
 year = input('year: ')
 domain = input('domain (d01, d02, d03, d04): ')
-wrfout = [Dataset(i) for i in sorted(glob.glob('../../wrfout_met/wrfout_'+ domain +'_'+year+'-'+month+'-01*'))]
+wrfout = [Dataset(i) for i in sorted(glob.glob('../../wrfout_met/wrfout_'+ domain +'_'+year+'-'+month+'-09_*'))]
 
 print("Extracting meteorological variables...")
 t2 = wrf.getvar(wrfout, 'T2', timeidx=wrf.ALL_TIMES, method='cat')
@@ -54,10 +54,10 @@ np.save('../02_data/processed/'+'lon_'+domain+'_'+str(year)+str(month)+'.npy', l
 np.save('../02_data/processed/'+'lat_'+domain+'_'+str(year)+str(month)+'.npy', lat)
 
 # Save as netCDF4
-t2.to_netcdf('../02_data/processed/'+'t2_'+domain+'_'+str(year)+str(month)+'.nc')
-ws.to_netcdf('../02_data/processed/'+'ws_'+domain+'_'+str(year)+str(month)+'.nc')
-wd.to_netcdf('../02_data/processed/'+'wd_'+domain+'_'+str(year)+str(month)+'.nc')
-rh2.to_netcdf('../02_data/processed/'+'rh2_'+domain+'_'+str(year)+str(month)+'.nc')
+#t2.to_netcdf('../02_data/processed/'+'t2_'+domain+'_'+str(year)+str(month)+'.nc')
+#ws.to_netcdf('../02_data/processed/'+'ws_'+domain+'_'+str(year)+str(month)+'.nc')
+#wd.to_netcdf('../02_data/processed/'+'wd_'+domain+'_'+str(year)+str(month)+'.nc')
+#rh2.to_netcdf('../02_data/processed/'+'rh2_'+domain+'_'+str(year)+str(month)+'.nc')
 
 print('''
 !!!!!!!!!!!!!!!!!
