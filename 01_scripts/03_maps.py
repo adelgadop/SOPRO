@@ -13,6 +13,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as md
 from matplotlib import ticker
+from matplotlib import gridspec
 import matplotlib as mpl
 import pickle as pkl
 import xarray as xr
@@ -97,114 +98,55 @@ for k in dset.keys():
 dset['d02']['t2'][0,:,:].plot()
 
 
-#%% Temperature
+#%% Plot maps for each meteorological parameter
 
-extension = {'d02': [-15, -4, 33.0, 45.0],
+parametros = {'t2' : 'Temperature at 2 m (ºC)', 
+              'rh2': 'Relative humidity at 2 m (%)', 
+              'ws' : 'Wind speed at 10 m (m/s)'}
+
+extension = {'d02': [-15, -4, 33.0, 45.0], # [lon1, lon2, lat1, lat2]
              'd03': [-10, -7, 40.5, 42.5],
-             'd04': [-10, -8, 37.9, 39.3]
-    }
+             'd04': [-10, -8, 37.9, 39.3]}
 
-for k in dset.keys():
+figura_size = {'d02': (8,11),
+               'd03': (8,8),
+               'd04': (8,8)}
+
+for par in parametros.keys():
     
-    air = dset[k].t2.isel(time= [6, 12, 18, 23]) - 273.15
-    # This is the map projection we want to plot *onto*
-    map_proj = ccrs.LambertConformal(central_longitude=-8.78, central_latitude=39.99)
+    for k in dset.keys():
+        
+        if par == 't2':
+            air = dset[k][par].isel(time= [6, 12, 18, 23]) - 273.15
+        else:
+            air = dset[k][par].isel(time= [6, 12, 18, 23])
+            
+        #  This is the map projection we want to plot *onto*
+        map_proj = ccrs.LambertConformal(central_longitude=-8.78, central_latitude=39.99)
 
-    p = air.plot(
-        transform=ccrs.PlateCarree(),  # the data's projection
-        col="time",
-        col_wrap=2,  # multiplot settings
-        aspect= 1.25,  # for a sensible figsize
-        subplot_kws={"projection": map_proj},
-        cbar_kwargs={"label": "Temperature at 2 m (ºC)"}
-        )  # the plot's projection
+        p = air.plot(
+            transform=ccrs.PlateCarree(),  # the data's projection
+            col="time",
+            figsize=figura_size[k],
+            col_wrap=2,  # multiplot settings
+            aspect= 1,  # for a sensible figsize
+            subplot_kws={"projection": map_proj},
+            cbar_kwargs={"label": parametros[par], 'shrink':0.6, 'spacing':'proportional'}
+            )  # the plot's projection
 
+        # We have to set the map's options on all axes
+        for ax in p.axes.flat:
+            ax.add_feature(cartopy.feature.BORDERS)
+            ax.coastlines()
+            gl=ax.gridlines(draw_labels=True, dms=True, x_inline=False, y_inline=False)
+            gl.xlabel_style = {'size':8}
+            gl.ylabel_style = {'size':8}
+            ax.set_extent(extension[k])
 
-    # We have to set the map's options on all axes
-    for ax in p.axes.flat:
-        ax.add_feature(cartopy.feature.BORDERS)
-        ax.coastlines()
-        ax.set_extent(extension[k])
-        #gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True, x_inline=False, 
-        #                  y_inline=False, linewidth=0.33, color='k',alpha=0.5)
-        #gl.right_labels = gl.top_labels = False
-        #gl.ylocator = ticker.FixedLocator([36, 38, 40, 42, 44])
-        #gl.xlocator = ticker.FixedLocator([-12, -10, -8, -6])
     
-    plt.savefig("03_output/fig/analysis/map_temp_"+k+".pdf", bbox_inches='tight', facecolor='w')
+        plt.savefig("03_output/fig/analysis/map_"+par+"_"+k+".pdf", 
+                    bbox_inches='tight', facecolor='w')
     
-    
-#%% Relative humidity
-
-extension = {'d02': [-15, -4, 33.0, 45.0],
-             'd03': [-10, -7, 40.5, 42.5],
-             'd04': [-10, -8, 37.9, 39.3]
-    }
-
-for k in dset.keys():
-    
-    air = dset[k].rh2.isel(time= [6, 12, 18, 23])
-    # This is the map projection we want to plot *onto*
-    map_proj = ccrs.LambertConformal(central_longitude=-8.78, central_latitude=39.99)
-
-    p = air.plot(
-        transform=ccrs.PlateCarree(),  # the data's projection
-        col="time",
-        col_wrap=2,  # multiplot settings
-        aspect= 1.25,  # for a sensible figsize
-        subplot_kws={"projection": map_proj},
-        cbar_kwargs={"label": "Relative humidity at 2 m (%)"}
-        )  # the plot's projection
-
-
-    # We have to set the map's options on all axes
-    for ax in p.axes.flat:
-        ax.add_feature(cartopy.feature.BORDERS)
-        ax.coastlines()
-        ax.set_extent(extension[k])
-        #gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True, x_inline=False, 
-        #                  y_inline=False, linewidth=0.33, color='k',alpha=0.5)
-        #gl.right_labels = gl.top_labels = False
-        #gl.ylocator = ticker.FixedLocator([36, 38, 40, 42, 44])
-        #gl.xlocator = ticker.FixedLocator([-12, -10, -8, -6])
-    
-    plt.savefig("03_output/fig/analysis/map_rh2_"+k+".pdf", bbox_inches='tight', facecolor='w')
-
-#%% Wind speed
-
-extension = {'d02': [-15, -4, 33.0, 45.0],
-             'd03': [-10, -7, 40.5, 42.5],
-             'd04': [-10, -8, 37.9, 39.3]
-    }
-
-for k in dset.keys():
-    
-    air = dset[k].ws.isel(time= [6, 12, 18, 23])
-    # This is the map projection we want to plot *onto*
-    map_proj = ccrs.LambertConformal(central_longitude=-8.78, central_latitude=39.99)
-
-    p = air.plot(
-        transform=ccrs.PlateCarree(),  # the data's projection
-        col="time",
-        col_wrap=2,  # multiplot settings
-        aspect= 1.25,  # for a sensible figsize
-        subplot_kws={"projection": map_proj},
-        cbar_kwargs={"label": "Wind speed at 10 m (m/s)"}
-        )  # the plot's projection
-
-
-    # We have to set the map's options on all axes
-    for ax in p.axes.flat:
-        ax.add_feature(cartopy.feature.BORDERS)
-        ax.coastlines()
-        ax.set_extent(extension[k])
-        #gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True, x_inline=False, 
-        #                  y_inline=False, linewidth=0.33, color='k',alpha=0.5)
-        #gl.right_labels = gl.top_labels = False
-        #gl.ylocator = ticker.FixedLocator([36, 38, 40, 42, 44])
-        #gl.xlocator = ticker.FixedLocator([-12, -10, -8, -6])
-    
-    plt.savefig("03_output/fig/analysis/map_ws_"+k+".pdf", bbox_inches='tight', facecolor='w')
 
 
 
