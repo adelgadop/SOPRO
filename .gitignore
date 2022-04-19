@@ -3,3 +3,4 @@
 *.gz
 *.nc
 *wrfout_d0*
+.Rproj.user
