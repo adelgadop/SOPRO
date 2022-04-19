@@ -25,8 +25,8 @@ for k in obs.keys():
     obs[k]['local_date'] = obs[k]['date'].dt.tz_convert('Europe/Lisbon')
 
 # Simulations using WRF
-mod_d02 = pkl.load(open('02_data/processed/1km_d03_2017_'+month+'.pkl', 'rb'))
-mod_d03 = pkl.load(open('02_data/processed/1km_d04_2017_'+month+'.pkl', 'rb'))
+mod_d02 = pkl.load(open('02_data/processed/1km_new_d02_2017_'+month+'.pkl', 'rb'))
+mod_d03 = pkl.load(open('02_data/processed/1km_new_d03_2017_'+month+'.pkl', 'rb'))
 mod = {**mod_d02, **mod_d03}
 
 stations = list(pd.read_csv('01_scripts/stations.csv').code)
@@ -42,10 +42,10 @@ for k in stations:
                                                             axis = 1)
     
     # Only in case if you forgot to eliminate two first days of wrfout_ files              
-    dct[k] = dct[k].iloc[48:,:] # spin-up of two days
+    #dct[k] = dct[k].iloc[48:,:] # spin-up of two days
 
 
-# Temperature (tc) ---------------------------------------------------------
+#%% Temperature (tc) ---------------------------------------------------------
 
 def fig_param(dct, p_obs, p_mod, stations, size_fig, ylabel, path):
     """
