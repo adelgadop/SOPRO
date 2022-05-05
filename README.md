@@ -26,7 +26,12 @@ The tasks are describing as following:
    - [x] Use of NCEP GDAS/FNL 0.25 Degree Global Tropospheric Analyses and Forecast Grids [ds083.3](https://rda.ucar.edu/datasets/ds083.3/)
    - [x] Geogrid model configuration
 
-<img width="482" alt="image" src="https://user-images.githubusercontent.com/52834007/158241657-c47482a3-aea0-423b-9687-0a4d97922050.png">
+Porto
+<img width="486" alt="image" src="https://user-images.githubusercontent.com/52834007/166975364-d3896803-b309-456e-9867-cc3c00b0914d.png">
+
+
+Lisboa
+<img width="484" alt="image" src="https://user-images.githubusercontent.com/52834007/166976566-e0980b7e-9503-4774-a8fa-eee184fc679e.png">
 
    - [x] ERA Interim
       - [x] Explore these websites: [Conor](https://conorsweeneyucd.blogspot.com/2015/01/download-era-interim-data.html), [dreambooker](https://dreambooker.site/2018/04/20/Initializing-the-WRF-model-with-ERA5/) about how download and automatize this process for initializing WRF-ARW.
