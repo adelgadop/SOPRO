@@ -5,6 +5,8 @@ from matplotlib import pyplot as plt
 from matplotlib import cm
 from wrf import (to_np, getvar, smooth2d, get_cartopy, cartopy_xlim, cartopy_ylim, latlon_coords)
 import cartopy.crs as ccrs
+import cartopy.feature as cfeature
+import cartopy.io.shapereader as shpreader
 
 #CO
 wrfchemi_path = '../../portugal/WRF/WRF-4.2.1/test/em_real/wrfchemi_00z_d01'
@@ -46,5 +48,31 @@ edgar_co_wrf.plot(ax=axes[1], cmap='inferno_r', y='lat', x='lon', vmax = 100,
                            cbar_kwargs={'shrink':0.5,
                                         'label': '$mol\;km^{-2}\; hr^{-1}$'})
 axes[1].set_title("Emissões de CO do EDGARv5")
+
+for ax in axes.flatten():
+    ax.set_yticks(np.arange(edgar_co_wrf.lat.min().round(1),
+                          edgar_co_wrf.lat.max().round(1), 
+                          1),
+                   crs=ccrs.PlateCarree())
+    ax.set_xticks(np.arange(edgar_co_wrf.lon.min().round(1),
+                              edgar_co_wrf.lon.max().round(1), 
+                              2),
+                       crs=ccrs.PlateCarree())
+    ax.set_ylabel('')
+    ax.set_xlabel('')
+    ax.coastlines('10m')
+    ax.add_feature(cfeature.STATES.with_scale('10m'))
+   # ax.add_feature(MUNS, facecolor='none', edgecolor='gray')
+    if ax != axes.flatten()[1]:
+        ax.set_extent([wrf_edgar_ds.lon.min(),
+                       wrf_edgar_ds.lon.max(),
+                       wrf_edgar_ds.lat.min(),
+                       wrf_edgar_ds.lat.max()])
+    #else:
+        #ax.set_extent([min(lon1d), max(lon1d), min(lat1d), max(lat1d)])
+       # ax.set_yticks([-23.4, -23.6, -23.8, -24.],
+       #            crs=ccrs.PlateCarree())
+        #ax.set_xticks([-46.8, -46.6, -46.4, -46.2],
+                         #  crs=ccrs.PlateCarree())
 
 plt.savefig("../03_output/fig/analysis/wrfchemis_map.png", bbox_inches="tight", dpi=300)
