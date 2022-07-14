@@ -10,20 +10,15 @@ import cartopy.io.shapereader as shpreader
 
 # NOx PM10, PM2.5, CO
 
-pol = ['NOx', 'PM10', 'PM2.5', 'CO', 'NMVOC']
+pol = ['PM10', 'PM2.5', 'CO', 'NOx', 'SO2', 'NMVOC']
 
 wrfchemi_path = '../../portugal/WRF/WRF-4.2.1/test/em_real/wrfchemi_00z_d01'
 
-edgarv5_path = []
-for p in pol:
-    edgarv5_path.append('/scr2/alejandro/WRF/DATA/util/EDGARv5_MOZART/edgar_v5_2015_'+p+'_0.1x0.1.nc')
-
-#%%
 # Loading wrfchemis and original htap emission
 wrfchemi = xr.open_dataset(wrfchemi_path)
-edgarv5_all = xr.Dataset()
-edgarv5 = xr.Dataset()
-edgarv5_wrf = xr.Dataset()
+edgarv5_all = {}
+edgarv5 = {}
+edgarv5_wrf = {}
 
 for p in pol:
     f = '/scr2/alejandro/WRF/DATA/util/EDGARv5_MOZART/edgar_v5_2015_'+p+'_0.1x0.1.nc'
@@ -40,7 +35,27 @@ for p in pol:
     
     
 # Make a plot
+fig, axes = plt.subplots(3,2, figsize=(16, 8), subplot_kw = {'projection': ccrs.PlateCarree()})
 
+for p, ax in zip(pol, axes.flat):
+    edgarv5_wrf[p].plot(ax=ax, cmap='inferno_r', y='lat', x='lon', vmax = 100,
+                        cbar_kwargs={'shrink':0.5, 'label': '$mol\;km^{-2}\; hr^{-1}$'})
+    ax.set_title("Emissões de "+p+" do EDGARv5")
+
+    ax.set_yticks(np.arange(edgarv5_wrf[p].lat.min().round(1),
+                          edgarv5_wrf[p].lat.max().round(1),
+                          1),
+                   crs=ccrs.PlateCarree())
+    ax.set_xticks(np.arange(edgarv5_wrf[p].lon.min().round(1),
+                            edgarv5_wrf[p].lon.max().round(1), 2),
+                       crs=ccrs.PlateCarree())
+    ax.set_ylabel('')
+    ax.set_xlabel('')
+    ax.coastlines('10m')
+    ax.add_feature(cfeature.BORDERS)
+    ax.coastlines()
+
+plt.savefig("../03_output/fig/analysis/wrfchemis_map.png", bbox_inches="tight", dpi=300)
 
 
 
