@@ -1,8 +1,1 @@
-code,lon,lat
-LPAR,-9.0333,38.8833
-LPCS,-9.3552,38.725
-LPMT,-9.0359,38.7039
-LPOV,-8.6459,40.9159
-LPPR,-8.6833,41.2333
-LPPT,-9.1359,38.7813
-LPST,-9.3395,38.831
+../02_data/raw/air_quality/stations.csv

@@ -11,7 +11,7 @@ print("Reading each wrfout...")
 month = input('month (e.g., 09): ')
 year = input('year: ')
 domain = input('domain (d01, d02, d03, d04): ')
-wrfout = [Dataset(i) for i in sorted(glob.glob('../../wrfout_met/wrfout_'+ domain +'_'+year+'-'+month+'-*'))]
+wrfout = [Dataset(i) for i in sorted(glob.glob('../../portugal/wrfout/wrfout_'+ domain +'_'+year+'-'+month+'-*'))]
 
 print("Extracting meteorological variables...")
 t2 = wrf.getvar(wrfout, 'T2', timeidx=wrf.ALL_TIMES, method='cat')
@@ -22,29 +22,33 @@ wd = wind.sel(wspd_wdir='wdir')
 psfc = wrf.getvar(wrfout, 'PSFC', timeidx=wrf.ALL_TIMES, method='cat')
 
 #print("Extracting polutants variables...")
-#o3 = wrf.getvar(wrfout, 'o3', timeidx=wrf.ALL_TIMES, method='cat')
-#no = wrf.getvar(wrfout, 'no', timeidx=wrf.ALL_TIMES, method='cat')
-#no2 = wrf.getvar(wrfout, 'no2', timeidx=wrf.ALL_TIMES, method='cat')
-#co = wrf.getvar(wrfout, 'co', timeidx=wrf.ALL_TIMES, method='cat')
+o3 = wrf.getvar(wrfout, 'o3', timeidx=wrf.ALL_TIMES, method='cat')
+no = wrf.getvar(wrfout, 'no', timeidx=wrf.ALL_TIMES, method='cat')
+no2 = wrf.getvar(wrfout, 'no2', timeidx=wrf.ALL_TIMES, method='cat')
+co = wrf.getvar(wrfout, 'co', timeidx=wrf.ALL_TIMES, method='cat')
 #tol = wrf.getvar(wrfout, 'tol',timeidx=wrf.ALL_TIMES, method='cat')
+pm2 = wrf.getvar(wrfout, 'PM2_5_DRY',timeidx=wrf.ALL_TIMES, method='cat')
+pm10 = wrf.getvar(wrfout, 'PM10',timeidx=wrf.ALL_TIMES, method='cat')
 
 # Retrieving values from surface
-#o3_sfc  = o3.isel(bottom_top=0)
-#co_sfc  = co.isel(bottom_top=0)
-#no_sfc  = no.isel(bottom_top=0)
-#no2_sfc = no2.isel(bottom_top=0)
+o3_sfc  = o3.isel(bottom_top=0)
+co_sfc  = co.isel(bottom_top=0)
+no_sfc  = no.isel(bottom_top=0)
+no2_sfc = no2.isel(bottom_top=0)
 #tol_sfc = tol.isel(bottom_top=0)
+pm2_sfc = pm2.isel(bottom_top=0)
+pm10_sfc = pm10.isel(bottom_top=0)
 
-#print("From ppm to ug/m3...o3, no, no2, tol")
+print("From ppm to ug/m3...o3, no, no2, tol")
 # [ug/m3] = [ppm] * P * M_i / (R * T)
 # R = 8.3143 J/K mol
 # P in Pa
 # T in K
 # WRF-Chem gas units in ppmv
-#R = 8.3144598 # J/K mol
-#o3_u = o3_sfc * psfc * (16 * 3) / (R * t2)
-#no_u = no_sfc * psfc * (14 + 16) / (R * t2)
-#no2_u = no2_sfc * psfc * (14 + 2*16) / (R * t2)
+R = 8.3144598 # J/K mol
+o3_u = o3_sfc * psfc * (16 * 3) / (R * t2)
+no_u = no_sfc * psfc * (14 + 16) / (R * t2)
+no2_u = no2_sfc * psfc * (14 + 2*16) / (R * t2)
 #tol_u = tol_sfc * psfc * 92.14 / (R * t2)
 
 print("Reading file with station location points")
@@ -75,15 +79,19 @@ def station_from_wrf(i, to_local=True):
        west_east= port_dom.x.values[i]).values,
     'wd': wd.sel(south_north= port_dom.y.values[i],
        west_east= port_dom.x.values[i]).values,
-    #'o3': o3_u.sel(south_north= cetesb_dom.y.values[i],
-    #   west_east=cetesb_dom.x.values[i]).values,
-    #'no': no_u.sel(south_north=cetesb_dom.y.values[i],
-    #   west_east=cetesb_dom.x.values[i]).values,
-    #'no2': no2_u.sel(south_north=cetesb_dom.y.values[i],
-    #   west_east=cetesb_dom.x.values[i]).values,
-    #'co': co_sfc.sel(south_north=cetesb_dom.y.values[i],
-    #   west_east=cetesb_dom.x.values[i]).values,
-    #'tol': tol_u.sel(south_north=cetesb_dom.y.values[i],
+    'o3': o3_u.sel(south_north= port_dom.y.values[i],
+       west_east=port_dom.x.values[i]).values,
+    'no': no_u.sel(south_north= port_dom.y.values[i],
+       west_east=port_dom.x.values[i]).values,
+    'no2': no2_u.sel(south_north= port_dom.y.values[i],
+       west_east=port_dom.x.values[i]).values,
+    'co': co_sfc.sel(south_north= port_dom.y.values[i],
+       west_east=port_dom.x.values[i]).values,
+    'pm2': pm2_sfc.sel(south_north= port_dom.y.values[i],
+       west_east=port_dom.x.values[i]).values,
+    'pm10': pm10_sfc.sel(south_north= port_dom.y.values[i],
+       west_east=port_dom.x.values[i]).values,    
+#'tol': tol_u.sel(south_north=cetesb_dom.y.values[i],
     #   west_east=cetesb_dom.x.values[i]).values,
     'code': port_dom.code.values[i]})
     if to_local:
