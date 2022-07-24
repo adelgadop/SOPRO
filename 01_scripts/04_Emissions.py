@@ -7,10 +7,11 @@ from matplotlib import cm
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import cartopy.io.shapereader as shpreader
+import matplotlib.patheffects as PathEffects
 
 # NOx PM10, PM2.5, CO
 
-pol = {'PM10':200, 'PM2.5':200, 'CO':1000, 'NOx':1000, 'SO2':300, 'NMVOC':300}
+pol = {'PM10':200, 'PM2.5':200, 'CO':1000, 'NOx':1000, 'SO2':300, 'NMVOC':1000}
 pol_name = {'PM10':'PM$_{10}$', 'PM2.5':'PM$_{2.5}$', 'CO':'CO', 'NOx':'NO$_x$',
             'SO2':'SO$_{2}$', 'NMVOC':'NMVOC'}
 
@@ -52,15 +53,95 @@ for p, ax in zip(pol.keys(), axes.flatten()):
     ax.set_xticks(np.arange(edgarv5_wrf[p].lon.min().round(1),
                             edgarv5_wrf[p].lon.max().round(1), 3),
                   crs=ccrs.PlateCarree())
+    
     ax.set_ylabel('')
     ax.set_xlabel('')
-    ax.coastlines('10m')
+    #ax.coastlines('10m')
+    ax.add_feature(cfeature.COASTLINE, color='b', linewidth=0.5)
     ax.add_feature(cfeature.BORDERS, edgecolor ='blue', linestyle='--', alpha=1)
     #gl=ax.gridlines(draw_labels=False, dms=True, x_inline=False, y_inline=False)
     #gl.xlabel_style = {'size':8}
     #gl.ylabel_style = {'size':8}
 
 fig.savefig("03_output/fig/analysis/wrfchemis_map.png", bbox_inches="tight", dpi=300)
+
+#%% Function
+def subset_map(edgarv5_wrf, city_coords, city, pol, pol_name, deg, path_name):
+    for p in pol.keys():
+        ds_pol = edgarv5_wrf[p]
+
+    top = city_coords['lat']+ deg
+    bottom = city_coords['lat']- deg
+    left = city_coords['lon'] - deg
+    right = city_coords['lon'] + deg
+    
+    mask_lon = (ds_pol.lon >= left) & (ds_pol.lon <= right)
+    mask_lat = (ds_pol.lat >= bottom) & (ds_pol.lat <= top)
+
+    ds_sel = ds_pol.where(mask_lon & mask_lat, drop=True)
+    
+    fig, axes = plt.subplots(len(pol), figsize=(6, 6), subplot_kw = {'projection': ccrs.PlateCarree()})
+    plt.subplots_adjust(wspace=0.2, hspace=0.4)
+    
+    for p, ax in zip(pol.keys(), axes.flatten()):
+            levels = list(np.arange(0,pol[p], 100))
+            ds_sel.plot(ax = ax, cmap='inferno_r', y='lat', x='lon', vmax = pol[p],
+                           cbar_kwargs={'shrink':0.8, 'label': '$ g\;km^{-2}\; hr^{-1}$', 
+                                     'spacing':'proportional', 'ticks':levels
+                             })
+            ax.set_title(pol_name[p])
+            ax.set_ylabel('')
+            ax.set_xlabel('')
+            ax.add_feature(cfeature.COASTLINE, color='b', linewidth=0.5)
+            ax.add_feature(cfeature.LAKES, alpha=0.5, color ='b')
+            ax.add_feature(cfeature.RIVERS, color='b')
+            ax.text(city_coords['lon'], city_coords['lat'], 'o', 
+                    color='b', size=8, ha='center', va='center', 
+                    transform=ccrs.PlateCarree(),
+                    path_effects=[PathEffects.withStroke(linewidth=3, foreground="w", alpha=1)]
+                    )
+            ax.text(city_coords['lon']-0.35, city_coords['lat']+0.4, city, 
+                    color='k', size=12, ha='center', va='center', 
+                    transform=ccrs.PlateCarree(),
+                    path_effects=[PathEffects.withStroke(linewidth=3, foreground="w", alpha=.5)]
+                    )
+            ax.set_yticks(np.arange(ds_sel.lat.min().round(1), 
+                                   ds_sel.lat.max().round(1), 0.5),
+                          crs=ccrs.PlateCarree())
+            ax.set_xticks(np.arange(ds_sel.lon.min().round(1),
+                                    ds_sel.lon.max().round(1), 0.5),
+                          crs=ccrs.PlateCarree())
+            
+    fig.savefig(path_name+".png", bbox_inches="tight", dpi=300)
+
+#%% Lisboa
+pol = {'PM10':1000, 'PM2.5':500}
+pol_name = {'PM10':'PM$_{10}$', 'PM2.5':'PM$_{2.5}$'}
+
+path_name = "03_output/fig/analysis/lisboa_map_pm"
+subset_map(edgarv5_wrf, 
+           {'lon': -9.13, 'lat': 38.716}, 
+           'Lisboa', 
+           pol, 
+           pol_name, 
+           1, 
+           path_name)
+
+#%% Porto
+pol = {'PM10':1000, 'PM2.5':500}
+pol_name = {'PM10':'PM$_{10}$', 'PM2.5':'PM$_{2.5}$'}
+
+path_name = "03_output/fig/analysis/porto_map_pm"
+subset_map(edgarv5_wrf, 
+           {'lon': -8.61, 'lat': 41.15}, 
+           'Porto', 
+           pol, 
+           pol_name, 
+           0.5, 
+           path_name)
+
+
+
 
 
 
