@@ -1,12 +1,12 @@
-name,code,type,lat,lon
-D.Manuel II-Vermoim, 1024, Urbana, 41.2356, -8.61872
-Sobreiras, 1050, Urbana, 41.1474, -8.65897
-Olivais, 3071, Urbana, 38.7698, -9.10729
-Entrecampos, 3072, Urbana, 38.7486, -9.14901
-Alfragide, 3082, Urbana, 38.7389, -9.2075
-Laranjeiro, 3083, Urbana, 38.6635, -9.15764
-Reboleira, 3084, Urbana, 38.7548, -9.23002
-Restelo, 3087, Urbana, 38.7057, -9.20946
-Mem Martins, 3089, Urbana, 38.7865, -9.34854
-Odivelas-Ramada, 3097, Urbana, 38.8037, -9.1834
-Cascais, 3104, Urbana, 38.7014, -9.42925
+city,name,code,type,lat,lon
+Porto,D.Manuel II-Vermoim, 1024, Urbana, 41.2356, -8.61872
+Porto,Sobreiras,1050, Urbana, 41.1474, -8.65897
+Lisboa,Olivais,3071, Urbana, 38.7698, -9.10729
+Lisboa,Entrecampos,3072, Urbana, 38.7486, -9.14901
+Lisboa,Alfragide,3082, Urbana, 38.7389, -9.2075
+Lisboa,Laranjeiro,3083, Urbana, 38.6635, -9.15764
+Lisboa,Reboleira,3084, Urbana, 38.7548, -9.23002
+Lisboa,Restelo,3087, Urbana, 38.7057, -9.20946
+Lisboa,Mem Martins,3089, Urbana, 38.7865, -9.34854
+Lisboa,Odivelas-Ramada,3097, Urbana, 38.8037, -9.1834
+Lisboa,Cascais,3104, Urbana, 38.7014, -9.42925
