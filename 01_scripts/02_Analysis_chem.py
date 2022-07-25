@@ -151,101 +151,89 @@ fig.legend(handles=[green_patch, blue_patch], bbox_to_anchor=(0.85, 0.25),loc='l
 
 fig.savefig('03_output/fig/analysis/boxplot_day_sep', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
 
+#%% Make plots: particulate matter
+
+# Porto
+# -------------------------------------------------------------------------------------------
+
+est_name = ['D.Manuel II-Vermoim','Sobreiras-Lordelo do Ouro']
+cidade = 'Porto'
+pol = {'pm10':'PM$_{10}$', 'pm2.5': 'PM$_{2.5}$'}
+
+
+fig, ax = plt.subplots(2, figsize=(8,8))
+
+for i, (n, p) in enumerate(zip(est_name, pol.keys())):
+   
+    filtrado1 = (data_2col.city == cidade) & (data_2col.pol == p) & (data_2col.name == n)
+    
+    data_2col.loc[filtrado1, :].plot(y = ['Obs'], style = ['-ok'],markersize = 5,
+                                          linewidth = '1', alpha=0.7, ax= ax[i])
+    data_2col.loc[filtrado1, :].plot(y = ['Mod'], style = ['-g'],
+                                          linewidth = '4', alpha=1, ax= ax[i])
+    
+    ax[i].set_ylabel(pol[p]+ ' ($\mu$g.m$^{-3}$)')
+    ax[i].set_xlabel('')
+    ax[i].set_title("Estação "+n + " (" + cidade+")")
+
+fig.text(0.5, 0.06, "Tempo local")
+fig.savefig('03_output/fig/analysis/pm_Porto_sep', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
+
+
+#%% Lisboa
+# -------------------------------------------------------------------------------------------
+est_name1 = ['Olivais']
+est_name2 = ['Laranjeiro']
+cidade = 'Lisboa'
+pol = {'pm10':'PM$_{10}$', 'pm2.5': 'PM$_{2.5}$'}
+
+fig, axes = plt.subplots(2,2, figsize=(12,10), sharex=False)
+
+for ax, n, p in zip(axes.flatten(), est_name1*2 + est_name2*2, list(pol.keys())*2):
+    
+    filtrado1 = (data_2col.city == cidade) & (data_2col.pol == p) & (data_2col.name == n)
+    
+    data_2col.loc[filtrado1, :].plot(y = ['Obs'], style = ['-ok'],markersize = 5,
+                                          linewidth = '1', alpha=0.7, ax= ax)
+    data_2col.loc[filtrado1, :].plot(y = ['Mod'], style = ['-g'],
+                                          linewidth = '4', alpha=1, ax= ax)
+
+    
+    ax.set_ylabel(pol[p]+ ' ($\mu$g.m$^{-3}$)')
+    ax.set_xlabel('')
+    ax.set_title("Estação "+n + " (" + cidade+")")
+fig.text(0.5, 0.06, "Tempo local")
+
+fig.savefig('03_output/fig/analysis/pm_Lisboa_sep', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
+
+
 #%% 
+est_names = ['Olivais', 'Entrecampos', 'Laranjeiro', 'Reboleira', 'Mem Martins', 'Restelo' ]
+cidade = 'Lisboa'
+pol = {'no2': 'NO$_2$'}
 
-#%% FUNCTION ---------------------------------------------------------
+fig, axes = plt.subplots(3, 2,figsize=(12,10), sharex=False, sharey=True, 
+                         gridspec_kw={'hspace':0.3, 'wspace':0.05})
 
-def fig_param(dct, p_obs, p_mod, stations, size_fig, ylabel, vmax, step, path):
-    """
+for ax, n, p in zip(axes.flatten(), est_names, list(pol.keys())*6):
     
+    filtrado1 = (data_2col.city == cidade) & (data_2col.pol == p) & (data_2col.name == n)
     
-    Parameter
-    ---------
-    dct: Dictionary
-        Stations name with pandas DataFrame
+    data_2col.loc[filtrado1, :].plot(y = ['Obs'], style = ['-ok'],markersize = 5,
+                                          linewidth = '1', alpha=0.7, ax= ax)
+    data_2col.loc[filtrado1, :].plot(y = ['Mod'], style = ['-g'],
+                                          linewidth = '4', alpha=1, ax= ax)
+
     
-    p_obs:
-        
-    p_mod:
-        
-    stations:
-    """
+    ax.set_ylabel('')
+    ax.set_xlabel('')
+    ax.set_title("Estação "+n + " (" + cidade+")")
+    ax.get_legend().remove()
     
-    
-    
-    fig, ax = plt.subplots(len(stations), sharex = True, sharey = True,
-                           figsize = size_fig, gridspec_kw={'hspace':0.3})
+fig.text(0.5, 0.06, "Tempo local")
+fig.text(0.08, 0.5, pol[p]+ ' ($\mu$g.m$^{-3}$)', va='center', rotation='vertical')
+handles, labels = ax.get_legend_handles_labels()
+fig.legend(handles, labels, bbox_to_anchor=(0.90, 0.60))
 
-    for i, k in enumerate(stations):
-        dct[k][['local_date', 
-               p_mod]].plot(x='local_date', style = ['g-'], lw = 2.5,
-                               alpha = .7, ax = ax[i], legend = False)
-        dct[k][['local_date', 
-               p_obs]].plot(x='local_date', style = ['k.'], ax = ax[i],
-                            legend = False, markersize = 4)
-        ax[i].set_yticks(np.arange(0, vmax+1, step))
-        
-        ax[i].set_title(nomes[k] + " ("+ str(k) +") - " + cidades[k],loc = 'left', fontsize = 8)
-        ax[i].set_xlabel('Local date')
-        ax[len(stations)-1].legend(['WRF', 'Obs'], ncol = 2, fontsize = 8)
+fig.savefig('03_output/fig/analysis/no2_Lisboa_sep', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
 
-        fig.text(0.04, 0.5, ylabel, 
-                 va='center', 
-                 rotation='vertical')
-        
-        # We save the figure
-        fig.savefig(path, bbox_inches = 'tight', facecolor = 'w', dpi = 300)
-
-
-                       
-#%% We use the function to print the figure
-stations = [1024,3071,3083,3084,3089,3097]
-fig_param(dct,'pm10_obs', 'pm10_mod', 
-          stations, # code stations with data
-          size_fig = (6,8), 
-          ylabel = 'PM$_{10}$ [$\mu$g.m$^{-3}$]',
-          vmax=50,
-          step=10,
-          path = '03_output/fig/analysis/pm10_test'+month+'.png')
-
-#%% Prepare data
-
-
-
-#%% Relative humidity --------------------------------------------------------
-
-fig_param(dct,'pm2.5', 'pm2', 
-          stations, 
-          size_fig = (6,8), 
-          ylabel = 'PM$_{10}$ [$\mu$g.m$^{-3}$]',
-          path = '03_output/fig/analysis/pm2_test'+month+'.png')
-
-
-#%% Wind speed ---------------------------------------------------------------
-
-fig_param(dct, 'ws_obs', 'ws_mod', 
-          stations, 
-          size_fig = (6,8), 
-          ylabel = 'Wind speed [m s$^{-1}$]',
-          path = '03_output/fig/analysis/wind_speed'+month+'.pdf')
-
-# Wind direction ---------------------------------------------------------------
-
-fig_param(dct, 'wd_obs', 'wd_mod', 
-          stations, 
-          size_fig = (6,8), 
-          ylabel = 'Wind direction [degree]',
-          path = '03_output/fig/analysis/wind_direction'+month+'.pdf')
-
-# Statistical evaluation -----------------------------------------------------
-
-df = pd.DataFrame()
-for k in stations:
-    res = ms.met_stats(dct[k], mets = ['tc','rh','ws','wd'])
-    res['name'] = k
-    df = pd.concat([df, res])
-
-df.dropna(thresh=3,inplace = True)
-df.sort_index(inplace = True)
-
-df.round(2).to_csv('03_output/tab/'+month+'_2017_statistics.csv')
