@@ -58,4 +58,4 @@ Lisboa
   - [x] Modeling practice with CMAQ. Use a tutorial as an example to run CMAQ.
   - [ ] Run CMAQ for Portugal and for the modeling domain of interest for the SOPRO Project, using WRF simulations. Evaluate results about aerosol formation and source profiles.
 
-My email is <adelgado@iag.usp.br> if you want to get in touch.
+My email is <aperalta@usp.br> if you want to get in touch.

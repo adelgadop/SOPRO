@@ -31,18 +31,17 @@ obs = obs.melt(id_vars=['local_date', 'code', 'name'],
 # Mechanism = MOZCART
 # Model domain = d02
 # Horizontal resolution = 9 km
-mod = pkl.load(open('02_data/processed/chem_d02_2017_'+month+'.pkl', 'rb'))
-
+mod = pkl.load(open('02_data/processed/lisboa_amanan_d02_2017_'+month+'.pkl', 'rb'))
 stations = pd.read_csv('02_data/raw/air_quality/stations.csv')
-
-station_codes = list(stations.code)
+station_codes = list(mod.keys())
+stations = stations.loc[stations.code.isin(station_codes),:]
 
 nomes = {}
 cidades = {}
 for k in station_codes:
     nomes[k] = stations.loc[stations.code == k, 'name'].values[0]
     cidades[k] = stations.loc[stations.code == k, 'city'].values[0]
-    mod[k].rename(columns={'pm2':'pm2.5'}, inplace=True)
+    #mod[k].rename(columns={'pm2':'pm2.5'}, inplace=True)
     
 mod_long = pd.DataFrame()
 
@@ -115,7 +114,7 @@ fig.delaxes(axes[1][2])
 
 # add common ylabel
 #fig.text(0.04, 0.5,"Concentração em $\mu$g.m$^{-3}$", va='center', rotation='vertical')
-fig.savefig('03_output/fig/analysis/boxplot_pols', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
+#fig.savefig('03_output/fig/analysis/boxplot_pols', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
 
 #%% Time series boxplot
 
@@ -149,7 +148,7 @@ fig.legend(handles=[green_patch, blue_patch], bbox_to_anchor=(0.85, 0.25),loc='l
 
 #handles, labels = ax.get_legend_handles_labels()
 
-fig.savefig('03_output/fig/analysis/boxplot_day_sep', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
+#fig.savefig('03_output/fig/analysis/boxplot_day_sep', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
 
 #%% Make plots: particulate matter
 
@@ -177,7 +176,7 @@ for i, (n, p) in enumerate(zip(est_name, pol.keys())):
     ax[i].set_title("Estação "+n + " (" + cidade+")")
 
 fig.text(0.5, 0.06, "Tempo local")
-fig.savefig('03_output/fig/analysis/pm_Porto_sep', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
+fig.savefig('03_output/fig/analysis/pm_Porto_sep_CAM-CHEM_FINN', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
 
 
 #%% Lisboa
@@ -204,13 +203,14 @@ for ax, n, p in zip(axes.flatten(), est_name1*2 + est_name2*2, list(pol.keys())*
     ax.set_title("Estação "+n + " (" + cidade+")")
 fig.text(0.5, 0.06, "Tempo local")
 
-fig.savefig('03_output/fig/analysis/pm_Lisboa_sep', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
+fig.savefig('03_output/fig/analysis/pm_Lisboa_sep_CAM-CHEM_FINN', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
 
 
 #%% 
 est_names = ['Olivais', 'Entrecampos', 'Laranjeiro', 'Reboleira', 'Mem Martins', 'Restelo' ]
 cidade = 'Lisboa'
-pol = {'no2': 'NO$_2$'}
+#pol = {'no2': 'NO$_2$'}
+pol = {'o3': 'O$_3$'}
 
 fig, axes = plt.subplots(3, 2,figsize=(12,10), sharex=False, sharey=True, 
                          gridspec_kw={'hspace':0.3, 'wspace':0.05})
@@ -235,5 +235,5 @@ fig.text(0.08, 0.5, pol[p]+ ' ($\mu$g.m$^{-3}$)', va='center', rotation='vertica
 handles, labels = ax.get_legend_handles_labels()
 fig.legend(handles, labels, bbox_to_anchor=(0.90, 0.60))
 
-fig.savefig('03_output/fig/analysis/no2_Lisboa_sep', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
+fig.savefig('03_output/fig/analysis/'+p+'_Lisboa_res02_sep', bbox_inches = 'tight', facecolor = 'w', dpi = 300)
 

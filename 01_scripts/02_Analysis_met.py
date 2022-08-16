@@ -29,15 +29,15 @@ mod_d02 = pkl.load(open('02_data/processed/1km_new_d02_2017_'+month+'.pkl', 'rb'
 mod_d03 = pkl.load(open('02_data/processed/1km_new_d03_2017_'+month+'.pkl', 'rb'))
 mod = {**mod_d02, **mod_d03}
 
-stations = list(pd.read_csv('01_scripts/stations.csv').code)
+stations = list(pd.read_csv('01_scripts/met_stations.csv').code)
 
 # Merge two type of data
 dct = {}
 for k in stations:
     dct[k] = mod[k].merge(obs[k], 
-                         on = 'local_date', 
-                         how = 'left', 
-                         suffixes = ('_mod', '_obs')).drop(['date_mod', 
+                          on = 'local_date', 
+                          how = 'left', 
+                          suffixes = ('_mod', '_obs')).drop(['date_mod', 
                                                             'date_obs'],
                                                             axis = 1)
     

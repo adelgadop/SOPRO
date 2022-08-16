@@ -9,7 +9,7 @@ import cartopy.feature as cfeature
 import cartopy.io.shapereader as shpreader
 import matplotlib.patheffects as PathEffects
 
-# NOx PM10, PM2.5, CO
+#%% NOx PM10, PM2.5, CO
 
 pol = {'PM10':200, 'PM2.5':200, 'CO':1000, 'NOx':1000, 'SO2':300, 'NMVOC':1000}
 pol_name = {'PM10':'PM$_{10}$', 'PM2.5':'PM$_{2.5}$', 'CO':'CO', 'NOx':'NO$_x$',
@@ -28,6 +28,7 @@ for p in pol.keys():
     print(p)
     f = '/Volumes/passport/EDGARv5/edgar_v5_2015_'+p+'_0.1x0.1.nc'
     edgarv5_all[p] = xr.open_dataset(f)
+    
     edgarv5[p] = edgarv5_all[p].TOTAL.isel(time=8) # September 2015
     edgar_lon = (edgarv5[p].
                  assign_coords({"lon": (((edgarv5_all[p].lon + 180) % 360) - 180)}).
@@ -64,6 +65,7 @@ for p, ax in zip(pol.keys(), axes.flatten()):
     #gl.ylabel_style = {'size':8}
 
 fig.savefig("03_output/fig/analysis/wrfchemis_map.png", bbox_inches="tight", dpi=300)
+
 
 #%% Function
 def subset_map(edgarv5_wrf, city_coords, city, pol, pol_name, deg, path_name):

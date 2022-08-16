@@ -5,8 +5,7 @@ Created on Mon Mar 14 16:10:33 2022
 
 @author: adelgado
 """
-
-
+#%%
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -16,6 +15,7 @@ import matplotlib.ticker as plticker
 
 #print(pytz.all_timezones)
 
+#%%
 air = pd.read_csv('02_data/raw/air_quality/aq_data.csv', sep = ',', decimal='.')
 air['date'] = pd.to_datetime(air['date'], format = '%Y-%m-%d %H:%M').dt.tz_localize('Etc/GMT-1')
 
@@ -37,7 +37,7 @@ for i, n in enumerate(lisbon):
     ax[i].set_title(n, loc = 'left', fontsize = 8)
     ax[-len(lisbon)].legend(['PM$_{10}$', 'PM$_{2.5}$'])
     fig.text(0.07, 0.5, ylabel, va = 'center', rotation='vertical')
-fig.savefig('03_output/fig/analysis/obs_pm_lisbon_set.png', bbox_inches='tight', facecolor='w', dpi=300)
+#fig.savefig('03_output/fig/analysis/obs_pm_lisbon_set.png', bbox_inches='tight', facecolor='w', dpi=300)
 
 
 
