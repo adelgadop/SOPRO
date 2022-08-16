@@ -11,7 +11,7 @@ print("Reading each wrfout...")
 month = input('month (e.g., 09): ')
 year = input('year: ')
 domain = input('domain (d01, d02, d03, d04): ')
-wrfout = [Dataset(i) for i in sorted(glob.glob('../../portugal/wrfout/wrfout_'+ domain +'_'+year+'-'+month+'-*'))]
+wrfout = [Dataset(i) for i in sorted(glob.glob('../../wrfout/lisboa/wrfout_'+ domain +'_'+year+'-'+month+'-*'))]
 
 print("Extracting meteorological variables...")
 t2 = wrf.getvar(wrfout, 'T2', timeidx=wrf.ALL_TIMES, method='cat')
