@@ -29,6 +29,8 @@ The tasks are describing as following:
    - [X] Biomass burning from FINN
    - [x] Anthropogenic emissions from EDGARv5 (2015)
    - [x] MOZCART mechanism (aerosol + gases)
+   - [ ] EDGARv6
+   - [ ] Europe model as chemical IC/BC
 
 Porto
 <img width="486" alt="image" src="https://user-images.githubusercontent.com/52834007/166975364-d3896803-b309-456e-9867-cc3c00b0914d.png">
