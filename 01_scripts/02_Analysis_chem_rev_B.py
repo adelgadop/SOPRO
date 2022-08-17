@@ -50,9 +50,9 @@ mod1_df.drop(['tc', 'rh', 'ws', 'wd', 'no'], axis=1, inplace=True)
 mod2_df.drop(['tc', 'rh', 'ws', 'wd', 'no'], axis=1, inplace=True)
 mod3_df.drop(['tc', 'rh', 'ws', 'wd', 'no'], axis=1, inplace=True)
 
-all_df1 = mod1_df.merge(obs, how='left', on=['local_date', 'code'], suffixes=['_mod1', '_obs'])
-all_df2 = mod2_df.merge(obs, how='left', on=['local_date', 'code'], suffixes=['_mod2', '_obs'])
-all_df3 = mod3_df.merge(obs, how='left', on=['local_date', 'code'], suffixes=['_mod3', '_obs'])
+all_df1 = mod1_df.merge(obs, how='left', on=['local_date', 'code'], suffixes=['_mod', '_obs'])
+all_df2 = mod2_df.merge(obs, how='left', on=['local_date', 'code'], suffixes=['_mod', '_obs'])
+all_df3 = mod3_df.merge(obs, how='left', on=['local_date', 'code'], suffixes=['_mod', '_obs'])
 
 #%% Make Plots
 def plots_by_station(nombre, all_df1, all_df2, all_df3):
@@ -62,9 +62,9 @@ def plots_by_station(nombre, all_df1, all_df2, all_df3):
 
     # PM10
     all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['pm10_obs'], style='-ok', lw=1, ax=ax[0,0])
-    all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['pm10_mod1'], style=['-g'], lw=3, alpha=.7, ax=ax[0,0])
-    all_df2.loc[all_df2.name == name, :].plot(x='local_date', y=['pm10_mod2'], style=['-b'], lw=3, alpha=.7, ax=ax[0,0])
-    all_df3.loc[all_df3.name == name, :].plot(x='local_date', y=['pm10_mod3'], style=['-m'], lw=3, alpha=.7, ax=ax[0,0])
+    all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['pm10_mod'], style='-g',  lw=3, alpha=.7, ax=ax[0,0])
+    all_df2.loc[all_df2.name == name, :].plot(x='local_date', y=['pm10_mod'], style='-b',  lw=3, alpha=.7, ax=ax[0,0])
+    all_df3.loc[all_df3.name == name, :].plot(x='local_date', y=['pm10_mod'], style='-m',  lw=3, alpha=.7, ax=ax[0,0])
     ax[0,0].legend(['Observações', 
                     '3 km (WRF-Chem v3.9.1)', 
                     '3 km (WRF-Chem v3.9.1) \n emissiões interpoladas (mensal)', 
@@ -74,36 +74,36 @@ def plots_by_station(nombre, all_df1, all_df2, all_df3):
 
     # PM2,5
     all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['pm2.5_obs'], style='-ok', lw=1, ax=ax[0,1])
-    all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['pm2.5_mod1'], style=['-g'], lw=3, alpha=.7, ax=ax[0,1])
-    all_df2.loc[all_df2.name == name, :].plot(x='local_date', y=['pm2.5_mod2'], style=['-b'], lw=3, alpha=.7, ax=ax[0,1])
-    all_df3.loc[all_df3.name == name, :].plot(x='local_date', y=['pm2.5_mod3'], style=['-m'], lw=3, alpha=.7, ax=ax[0,1])
+    all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['pm2.5_mod'], style='-g', lw=3, alpha=.7, ax=ax[0,1])
+    all_df2.loc[all_df2.name == name, :].plot(x='local_date', y=['pm2.5_mod'], style='-b', lw=3, alpha=.7, ax=ax[0,1])
+    all_df3.loc[all_df3.name == name, :].plot(x='local_date', y=['pm2.5_mod'], style='-m', lw=3, alpha=.7, ax=ax[0,1])
     ax[0,1].get_legend().remove()
     ax[0,1].set_ylim([0, 30])
     ax[0,1].set_ylabel('PM$_{2.5}$ ($\mu$g.m$^{-3}$)')
 
     # CO
     all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['co_obs'], style='-ok', lw=1, ax=ax[1,0])
-    all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['co_mod1'], style=['-g'], lw=3, alpha=.7, ax=ax[1,0])
-    all_df2.loc[all_df2.name == name, :].plot(x='local_date', y=['co_mod2'], style=['-b'], lw=3, alpha=.7, ax=ax[1,0])
-    all_df3.loc[all_df3.name == name, :].plot(x='local_date', y=['co_mod3'], style=['-m'], lw=3, alpha=.7, ax=ax[1,0])
+    all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['co_mod'], style=['-g'], lw=3, alpha=.7, ax=ax[1,0])
+    all_df2.loc[all_df2.name == name, :].plot(x='local_date', y=['co_mod'], style=['-b'], lw=3, alpha=.7, ax=ax[1,0])
+    all_df3.loc[all_df3.name == name, :].plot(x='local_date', y=['co_mod'], style=['-m'], lw=3, alpha=.7, ax=ax[1,0])
     ax[1,0].get_legend().remove()
     ax[1,0].set_ylim([0, 0.8])
     ax[1,0].set_ylabel('CO (ppm)')
 
     # O3
     all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['o3_obs'], style='-ok', lw=1, ax=ax[2,1])
-    all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['o3_mod1'], style=['-g'], lw=3, alpha=.7, ax=ax[2,1])
-    all_df2.loc[all_df2.name == name, :].plot(x='local_date', y=['o3_mod2'], style=['-b'], lw=3, alpha=.7, ax=ax[2,1])
-    all_df3.loc[all_df3.name == name, :].plot(x='local_date', y=['o3_mod3'], style=['-m'], lw=3, alpha=.7, ax=ax[2,1])
+    all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['o3_mod'], style='-g', lw=3, alpha=.7, ax=ax[2,1])
+    all_df2.loc[all_df2.name == name, :].plot(x='local_date', y=['o3_mod'], style='-b', lw=3, alpha=.7, ax=ax[2,1])
+    all_df3.loc[all_df3.name == name, :].plot(x='local_date', y=['o3_mod'], style='-m', lw=3, alpha=.7, ax=ax[2,1])
     ax[2,1].get_legend().remove()
     ax[2,1].set_ylabel('O$_3$ ($\mu$g.m$^{-3}$)')
     ax[2,1].set_xlabel('Tempo local')
 
     # NO2
     all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['no2_obs'], style='-ok', lw=1, ax=ax[2,0])
-    all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['no2_mod1'], style=['-g'], lw=3, alpha=.7, ax=ax[2,0])
-    all_df2.loc[all_df2.name == name, :].plot(x='local_date', y=['no2_mod2'], style=['-b'], lw=3, alpha=.7, ax=ax[2,0])
-    all_df3.loc[all_df3.name == name, :].plot(x='local_date', y=['no2_mod3'], style=['-m'], lw=3, alpha=.7, ax=ax[2,0])
+    all_df1.loc[all_df1.name == name, :].plot(x='local_date', y=['no2_mod'], style='-g', lw=3, alpha=.7, ax=ax[2,0])
+    all_df2.loc[all_df2.name == name, :].plot(x='local_date', y=['no2_mod'], style='-b', lw=3, alpha=.7, ax=ax[2,0])
+    all_df3.loc[all_df3.name == name, :].plot(x='local_date', y=['no2_mod'], style='-m', lw=3, alpha=.7, ax=ax[2,0])
     ax[2,0].get_legend().remove()
     ax[2,0].set_ylabel('NO$_2$ ($\mu$g.m$^{-3}$)')
     ax[2,0].set_xlabel('Tempo local')
@@ -115,6 +115,31 @@ def plots_by_station(nombre, all_df1, all_df2, all_df3):
 
 for n in stations.name:
     plots_by_station(n, all_df1, all_df2, all_df3)
+
+#%% 
+# =============================================================================
+# Statistical analysis: O3 as 1 hr and PM2.5 as 24 h, according to Emery (2017)
+# =============================================================================
+
+stats = {}
+sta_df = pd.DataFrame()
+
+
+for n in all_df1.name.unique():
+    stats[n] = ms.aq_stats(all_df1.loc[all_df1.name.isin([n]),:],polls=['o3'])
+     
+    stats[n].loc[:, 'name'] = (n)
+    df = stats[n]
+    sta_df = pd.concat([sta_df,df]).round(2).drop(['MAGE','RMSE','IOA'], axis=1)
+    sta_df.dropna(inplace=True)
+    
+
+
+    
+    
+
+
+
 
 
 
