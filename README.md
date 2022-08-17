@@ -25,6 +25,10 @@ The tasks are describing as following:
    - [x] Review the article *[Modelling air quality levels of regulated metals: limitations and challenges](https://link.springer.com/article/10.1007/s11356-020-09645-9)* to obtain coordinates for WRF and details to reproduce the experiment.
    - [x] Use of NCEP GDAS/FNL 0.25 Degree Global Tropospheric Analyses and Forecast Grids [ds083.3](https://rda.ucar.edu/datasets/ds083.3/)
    - [x] Geogrid model configuration
+   - [x] Cam-Chem as chemical IC/BC
+   - [X] Biomass burning from FINN
+   - [x] Anthropogenic emissions from EDGARv5 (2015)
+   - [x] MOZCART mechanism (aerosol + gases)
 
 Porto
 <img width="486" alt="image" src="https://user-images.githubusercontent.com/52834007/166975364-d3896803-b309-456e-9867-cc3c00b0914d.png">
